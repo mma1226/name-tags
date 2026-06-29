@@ -9,6 +9,20 @@
 <x-dc>
 <helmet>
   <link rel="stylesheet" href="_ds/modal-design-system-43bc1a90-8e75-4ba3-9966-4a6941c90299/colors_and_type.css">
+  <style>
+    /* Preview-only affordances. These live in the page stylesheet (not inline),
+       so the PNG export — whose SVG only embeds the font CSS — never includes
+       the placeholders or the dashed outline. */
+    .et-name:empty::before { content: attr(data-ph); color: var(--et-ph, #9a9a9a); }
+    .et-logo--empty::before {
+      content: attr(data-ph); color: var(--et-ph, #9a9a9a);
+      font-size: 6cqw; font-weight: 500; letter-spacing: -0.01em; white-space: nowrap;
+    }
+    .et-logo--preview {
+      border: 0.5cqw dashed var(--et-outline, rgba(0,0,0,0.22));
+      border-radius: 2.4cqw; padding: 2.6cqw 4cqw;
+    }
+  </style>
 </helmet>
 <div class="et-card" style="{{ card }}">
   <sc-if value="{{ isGlow }}" hint-placeholder-val="{{ true }}">
@@ -17,30 +31,26 @@
 
   <div style="{{ topBlock }}">
     <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
-      <div ref="{{ nameRef }}" contenteditable="true" spellcheck="false" onInput="{{ onName }}" style="{{ nameEdit }}"></div>
+      <div ref="{{ nameRef }}" class="et-name" data-ph="Name" contenteditable="true" spellcheck="false" onInput="{{ onName }}" style="{{ nameEdit }}"></div>
     </sc-if>
     <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
-      <sc-if value="{{ isFilled }}" hint-placeholder-val="{{ true }}">
-        <div style="{{ nameStyle }}">{{ guest }}</div>
-      </sc-if>
-      <sc-if value="{{ isBlank }}" hint-placeholder-val="{{ true }}">
-        <div style="{{ nameStyle }}"></div>
-      </sc-if>
+      <div class="et-name" data-ph="Name" style="{{ nameStyle }}"></div>
     </sc-if>
 
     <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
-      <div style="{{ logoSlot }}" onClick="{{ pickLogo }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" title="Click or drop an image to set this company's logo">
+      <div class="{{ logoClass }}" data-ph="Company Logo" style="{{ logoSlot }}" onClick="{{ pickLogo }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" title="Click or drop an image to set this company's logo">
         <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
           <img src="{{ logoSrc }}" alt="" style="{{ logoImg }}" />
-        </sc-if>
-        <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}">
-          <span style="{{ logoPlaceholder }}">Company Logo</span>
         </sc-if>
       </div>
       <input ref="{{ fileRef }}" type="file" accept="image/*" onChange="{{ onLogoFile }}" style="display:none" />
     </sc-if>
     <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
-      <span style="{{ logoPlaceholder }}">Company Logo</span>
+      <div class="{{ logoClass }}" data-ph="Company Logo" style="{{ logoSlot }}">
+        <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
+          <img src="{{ logoSrc }}" alt="" style="{{ logoImg }}" />
+        </sc-if>
+      </div>
     </sc-if>
   </div>
 
@@ -52,7 +62,7 @@
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;guest&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;First Last&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   state = { logo: null };
 
@@ -74,12 +84,14 @@ class Component extends DCLogic {
     if (this.props.editable) this.applyText();
   }
 
+  // Restore a previously typed name; otherwise leave the field empty so the
+  // "Name" placeholder shows. (No prefilled sample — the empty state is the cue.)
   applyText() {
     const n = this.nameRef.current;
     if (n && n.textContent === '') {
       let v = null;
       try { v = localStorage.getItem(this.key('name')); } catch (e) {}
-      n.textContent = (v != null) ? v : (this.props.guest || 'First Last');
+      if (v) n.textContent = v;
     }
   }
 
@@ -110,8 +122,6 @@ class Component extends DCLogic {
           tmp.remove();
         }
       }
-      // Pin width/height to the viewBox so the <img> has a definite intrinsic size
-      // with the correct aspect ratio (leaving them as "100%" or absent collapses it).
       const vb = (svg.getAttribute('viewBox') || '').split(/[ ,]+/).map(Number);
       if (vb.length === 4 && vb[2] > 0 && vb[3] > 0) {
         svg.setAttribute('width', vb[2]);
@@ -145,9 +155,11 @@ class Component extends DCLogic {
     const editable = this.props.editable === true || this.props.editable === 'true';
     const glowOn = this.props.glow !== false && this.props.glow !== 'false';
 
-    const ink    = dark ? '#f2f2f2' : '#181818';
-    const cardBg = dark ? '#181818' : '#ffffff';
-    const cardBd = dark ? '1px solid rgba(255,255,255,0.10)' : '1px solid #e6e6e6';
+    const ink     = dark ? '#f2f2f2' : '#181818';
+    const phColor = dark ? '#8b8b8b' : '#a0a0a0';
+    const outline = dark ? 'rgba(255,255,255,0.22)' : 'rgba(0,0,0,0.22)';
+    const cardBg  = dark ? '#181818' : '#ffffff';
+    const cardBd  = dark ? '1px solid rgba(255,255,255,0.10)' : '1px solid #e6e6e6';
     const hasLogo = !!this.state.logo;
 
     const glowBg = dark
@@ -168,7 +180,7 @@ class Component extends DCLogic {
       hasLogo:  hasLogo,
       noLogo:   !hasLogo,
       logoSrc:  this.state.logo,
-      guest:    this.props.guest || 'First Last',
+      logoClass: 'et-logo et-logo--preview' + (hasLogo ? '' : ' et-logo--empty'),
 
       nameRef: this.nameRef,
       fileRef: this.fileRef,
@@ -183,6 +195,7 @@ class Component extends DCLogic {
         background: cardBg, border: cardBd, borderRadius: '2.4cqw',
         overflow: 'hidden', containerType: 'inline-size', boxSizing: 'border-box',
         fontFamily: 'var(--font-sans)', fontFeatureSettings: '"cv11" on, "ss01" on',
+        '--et-ph': phColor, '--et-outline': outline,
       },
       glow: { position: 'absolute', inset: 0, pointerEvents: 'none', background: glowBg },
 
@@ -193,9 +206,8 @@ class Component extends DCLogic {
       nameStyle,
       nameEdit: Object.assign({}, nameStyle, { outline: 'none', cursor: 'text', minHeight: '1em' }),
 
-      logoSlot: { display: 'inline-flex', alignItems: 'center', cursor: 'pointer', maxWidth: '100%' },
+      logoSlot: { display: 'inline-flex', alignItems: 'center', cursor: 'pointer', maxWidth: '100%', boxSizing: 'border-box' },
       logoImg: { maxHeight: '14cqw', maxWidth: '58cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
-      logoPlaceholder: { color: ink, fontSize: '6cqw', fontWeight: 500, letterSpacing: '-0.01em', whiteSpace: 'nowrap' },
 
       brandWrap: {
         position: 'absolute', right: '7cqw', bottom: '7cqw',
