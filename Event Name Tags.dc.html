@@ -125,8 +125,25 @@ class Component extends DCLogic {
       const w = Math.round(rect.width * scale);
       const h = Math.round(rect.height * scale);
 
+      // Capture the logo and composite it onto the canvas afterward — images
+      // nested inside an SVG foreignObject can silently fail to rasterize, so we
+      // draw it directly instead of relying on the nested render.
+      const liveLogo = card.querySelector('.et-logo img');
+      let logoBox = null;
+      if (liveLogo && liveLogo.getAttribute('src')) {
+        const lr = liveLogo.getBoundingClientRect();
+        logoBox = {
+          src: liveLogo.getAttribute('src'),
+          x: (lr.left - rect.left) / rect.width * w,
+          y: (lr.top - rect.top) / rect.height * h,
+          w: lr.width / rect.width * w,
+          h: lr.height / rect.height * h,
+        };
+      }
+
       const clone = card.cloneNode(true);
       clone.querySelectorAll('input').forEach((n) => n.remove());
+      clone.querySelectorAll('.et-logo img').forEach((n) => n.remove());
       clone.style.width = w + 'px';
       clone.style.height = h + 'px';
       clone.style.margin = '0';
@@ -150,7 +167,17 @@ class Component extends DCLogic {
 
       const canvas = document.createElement('canvas');
       canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+
+      if (logoBox) {
+        try {
+          const limg = new Image();
+          limg.src = logoBox.src;
+          await limg.decode();
+          ctx.drawImage(limg, logoBox.x, logoBox.y, logoBox.w, logoBox.h);
+        } catch (e) { console.error('[export] logo composite failed', e); }
+      }
 
       await new Promise((res) => canvas.toBlob((blob) => {
         const a = document.createElement('a');
