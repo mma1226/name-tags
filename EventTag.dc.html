@@ -15,55 +15,48 @@
     <div style="{{ glow }}"></div>
   </sc-if>
 
-  <sc-if value="{{ isFilled }}" hint-placeholder-val="{{ true }}">
-    <div style="{{ nameWrap }}">
-      <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
-        <div ref="{{ nameRef }}" contenteditable="true" spellcheck="false" onInput="{{ onName }}" style="{{ nameEdit }}"></div>
-      </sc-if>
-      <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
+  <div style="{{ topBlock }}">
+    <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
+      <div ref="{{ nameRef }}" contenteditable="true" spellcheck="false" onInput="{{ onName }}" style="{{ nameEdit }}"></div>
+    </sc-if>
+    <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{ isFilled }}" hint-placeholder-val="{{ true }}">
         <div style="{{ nameStyle }}">{{ guest }}</div>
       </sc-if>
-    </div>
-
-    <div style="{{ footer }}">
-      <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
-        <div style="{{ slotBox }}" onClick="{{ pickLogo }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" title="Click or drop an image to set this company's logo">
-          <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
-            <img src="{{ logoSrc }}" alt="" style="{{ logoImg }}" />
-          </sc-if>
-          <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="{{ iconStyle }}"><path d="M12 3v12"></path><path d="m8 7 4-4 4 4"></path><path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"></path></svg>
-            <span style="{{ logoLabel }}">Upload logo</span>
-          </sc-if>
-        </div>
-        <input ref="{{ fileRef }}" type="file" accept="image/*" onChange="{{ onLogoFile }}" style="display:none" />
+      <sc-if value="{{ isBlank }}" hint-placeholder-val="{{ true }}">
+        <div style="{{ nameStyle }}"></div>
       </sc-if>
-      <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
-        <div style="{{ slotStatic }}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="{{ iconStyle }}"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="1.7"></circle><path d="M21 15l-5-5L5 21"></path></svg>
-          <span style="{{ logoLabel }}">Logo</span>
-        </div>
-      </sc-if>
+    </sc-if>
 
-    </div>
-  </sc-if>
+    <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
+      <div style="{{ logoSlot }}" onClick="{{ pickLogo }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" title="Click or drop an image to set this company's logo">
+        <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
+          <img src="{{ logoSrc }}" alt="" style="{{ logoImg }}" />
+        </sc-if>
+        <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}">
+          <span style="{{ logoPlaceholder }}">Company Logo</span>
+        </sc-if>
+      </div>
+      <input ref="{{ fileRef }}" type="file" accept="image/*" onChange="{{ onLogoFile }}" style="display:none" />
+    </sc-if>
+    <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
+      <span style="{{ logoPlaceholder }}">Company Logo</span>
+    </sc-if>
+  </div>
 
-  <sc-if value="{{ isBlank }}" hint-placeholder-val="{{ true }}">
-    <div style="{{ brandWrap }}">
-      <svg viewBox="0 0 253 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="{{ brandMark }}">
-        <path d="M146.602 6.42704H154.896V40.9875H148.676V16.3519L139.097 40.9875H133.469L123.892 16.3025V40.9875H117.67V6.42704H125.966L136.284 33.0871L146.605 6.42704H146.602ZM184.616 28.3953C184.616 30.9316 184.065 33.1934 182.962 35.1833C181.86 37.1757 180.312 38.7306 178.322 39.8504C176.33 40.9702 174.068 41.5288 171.532 41.5288C168.996 41.5288 166.645 40.9628 164.67 39.8257C162.695 38.691 161.147 37.1263 160.03 35.1364C158.91 33.1464 158.351 30.8969 158.351 28.3953C158.351 25.8937 158.91 23.6071 160.03 21.6321C161.15 19.657 162.705 18.1021 164.697 16.9675C166.687 15.8328 168.968 15.2643 171.534 15.2643C174.1 15.2643 176.374 15.8254 178.35 16.9428C180.325 18.065 181.862 19.6199 182.967 21.6098C184.07 23.5997 184.621 25.864 184.621 28.3978L184.616 28.3953ZM178.641 28.3953C178.641 26.8825 178.347 25.5254 177.754 24.324C177.161 23.1226 176.323 22.2006 175.237 21.5579C174.15 20.9177 172.916 20.5963 171.532 20.5963C170.148 20.5963 168.865 20.9177 167.782 21.5579C166.694 22.2006 165.846 23.1128 165.238 24.2968C164.63 25.4834 164.324 26.8479 164.324 28.3953C164.324 29.9428 164.63 31.3073 165.238 32.4938C165.846 33.6804 166.694 34.5925 167.782 35.2352C168.867 35.8755 170.118 36.1968 171.532 36.1968C172.946 36.1968 174.15 35.8755 175.237 35.2352C176.323 34.5925 177.163 33.6804 177.754 32.4938C178.347 31.3098 178.641 29.9428 178.641 28.3953ZM213.051 5.93265V40.9875H207.079V38.0755C206.29 39.131 205.249 39.969 203.969 40.592C202.686 41.2174 201.156 41.5288 199.376 41.5288C197.072 41.5288 195.03 40.9949 193.255 39.9245C191.478 38.8542 190.096 37.3315 189.107 35.3564C188.121 33.3813 187.627 31.0601 187.627 28.3953C187.627 25.7306 188.104 23.5083 189.058 21.5332C190.012 19.5581 191.352 18.0205 193.082 16.918C194.81 15.8155 196.842 15.2643 199.181 15.2643C200.99 15.2643 202.545 15.5585 203.845 16.1517C205.146 16.745 206.223 17.5508 207.079 18.5693V5.93018H213.051V5.93265ZM207.276 28.3953C207.276 26.8825 206.997 25.5254 206.436 24.324C205.877 23.1226 205.086 22.2006 204.068 21.5579C203.047 20.9177 201.845 20.5963 200.464 20.5963C199.013 20.5963 197.772 20.9177 196.736 21.5579C195.7 22.2006 194.909 23.1226 194.365 24.324C193.824 25.5254 193.552 26.8825 193.552 28.3953C193.552 29.9082 193.824 31.2677 194.365 32.4691C194.909 33.6705 195.708 34.5901 196.761 35.2328C197.816 35.873 199.05 36.1944 200.466 36.1944C201.883 36.1944 203.007 35.873 204.043 35.2328C205.079 34.5901 205.88 33.6705 206.438 32.4691C206.999 31.2677 207.279 29.9106 207.279 28.3953H207.276ZM241.933 15.8056V40.985H235.961V38.1225C235.138 39.1755 234.085 40.0061 232.802 40.6167C231.519 41.2248 229.986 41.5288 228.209 41.5288C225.905 41.5288 223.866 40.9949 222.088 39.9245C220.311 38.8542 218.937 37.3315 217.965 35.3564C216.994 33.3813 216.509 31.0601 216.509 28.3953C216.509 25.7306 216.986 23.5083 217.94 21.5332C218.895 19.5581 220.234 18.0205 221.965 16.918C223.693 15.8155 225.725 15.2643 228.063 15.2643C229.905 15.2643 231.502 15.5856 232.851 16.2259C234.198 16.8686 235.237 17.6992 235.961 18.7176V15.8056H241.933ZM236.156 28.3953C236.156 26.8825 235.877 25.5254 235.316 24.324C234.757 23.1226 233.966 22.2006 232.948 21.5579C231.927 20.9177 230.725 20.5963 229.344 20.5963C227.893 20.5963 226.652 20.9177 225.616 21.5579C224.58 22.2006 223.789 23.1226 223.245 24.324C222.704 25.5254 222.432 26.8825 222.432 28.3953C222.432 29.9082 222.704 31.2677 223.245 32.4691C223.789 33.6705 224.588 34.5901 225.641 35.2328C226.696 35.873 227.93 36.1944 229.346 36.1944C230.762 36.1944 231.887 35.873 232.923 35.2328C233.959 34.5901 234.76 33.6705 235.318 32.4691C235.879 31.2677 236.159 29.9106 236.159 28.3953H236.156ZM246.944 5.93265V40.9875H252.919V5.93265H246.944Z"></path>
-        <path d="M90.4526 30.5676C90.5729 30.7635 90.4319 31.0154 90.202 31.0154H73.146C72.9369 31.0154 72.7435 30.9044 72.6381 30.7237L55.223 0.878713C55.1087 0.682709 55.25 0.436523 55.477 0.436523H70.6366C71.4542 0.436523 72.2132 0.861139 72.641 1.55792L90.4526 30.5676ZM44.3307 14.5636C44.4453 14.7596 44.3039 15.006 44.0769 15.006H27.9392C27.7302 15.006 27.537 14.8951 27.4315 14.7147L19.3452 0.87889C19.2306 0.682886 19.372 0.436523 19.599 0.436523H34.8932C35.6245 0.436523 36.301 0.824672 36.67 1.45611L44.3307 14.5636ZM0.693037 32.9205C0.26627 32.1881 0.266527 31.2828 0.693708 30.5508L17.5918 1.59175C17.7052 1.3973 17.9862 1.39731 18.0997 1.59177L24.8632 13.1848L26.15 15.4323C26.254 15.6141 26.2535 15.8375 26.1487 16.0189L23.1089 21.2742L8.77152 45.9109C8.65817 46.1056 8.37685 46.1057 8.26338 45.911L0.693037 32.9205ZM27.4695 45.8582C27.048 46.5806 26.2745 47.0249 25.438 47.0249H10.3132C10.0863 47.0249 9.94493 46.7787 10.0593 46.5827L27.4744 16.7376C27.5798 16.557 27.7731 16.446 27.9823 16.446H44.1201C44.347 16.446 44.4884 16.6922 44.374 16.8882L27.4695 45.8582ZM45.6409 16.4672C45.374 16.0092 45.3744 15.443 45.6418 14.9853L53.4696 1.59201C53.5832 1.39754 53.8644 1.39787 53.9776 1.59261L71.3528 31.4822C71.459 31.6649 71.459 31.8906 71.3527 32.0733L63.3061 45.9106C63.1928 46.1054 62.9114 46.1056 62.7979 45.9108L45.6409 16.4672ZM81.976 45.9524C81.5424 46.6212 80.7995 47.0249 80.0025 47.0249H64.8055C64.5785 47.0249 64.4371 46.7785 64.5517 46.5825L72.638 32.7467C72.7435 32.5663 72.9367 32.4554 73.1457 32.4554H90.1865C90.4196 32.4554 90.56 32.7138 90.4332 32.9094L81.976 45.9524Z"></path>
-      </svg>
-    </div>
-  </sc-if>
+  <div style="{{ brandWrap }}">
+    <svg viewBox="0 0 253 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="{{ brandMark }}">
+      <path d="M146.602 6.42704H154.896V40.9875H148.676V16.3519L139.097 40.9875H133.469L123.892 16.3025V40.9875H117.67V6.42704H125.966L136.284 33.0871L146.605 6.42704H146.602ZM184.616 28.3953C184.616 30.9316 184.065 33.1934 182.962 35.1833C181.86 37.1757 180.312 38.7306 178.322 39.8504C176.33 40.9702 174.068 41.5288 171.532 41.5288C168.996 41.5288 166.645 40.9628 164.67 39.8257C162.695 38.691 161.147 37.1263 160.03 35.1364C158.91 33.1464 158.351 30.8969 158.351 28.3953C158.351 25.8937 158.91 23.6071 160.03 21.6321C161.15 19.657 162.705 18.1021 164.697 16.9675C166.687 15.8328 168.968 15.2643 171.534 15.2643C174.1 15.2643 176.374 15.8254 178.35 16.9428C180.325 18.065 181.862 19.6199 182.967 21.6098C184.07 23.5997 184.621 25.864 184.621 28.3978L184.616 28.3953ZM178.641 28.3953C178.641 26.8825 178.347 25.5254 177.754 24.324C177.161 23.1226 176.323 22.2006 175.237 21.5579C174.15 20.9177 172.916 20.5963 171.532 20.5963C170.148 20.5963 168.865 20.9177 167.782 21.5579C166.694 22.2006 165.846 23.1128 165.238 24.2968C164.63 25.4834 164.324 26.8479 164.324 28.3953C164.324 29.9428 164.63 31.3073 165.238 32.4938C165.846 33.6804 166.694 34.5925 167.782 35.2352C168.867 35.8755 170.118 36.1968 171.532 36.1968C172.946 36.1968 174.15 35.8755 175.237 35.2352C176.323 34.5925 177.163 33.6804 177.754 32.4938C178.347 31.3098 178.641 29.9428 178.641 28.3953ZM213.051 5.93265V40.9875H207.079V38.0755C206.29 39.131 205.249 39.969 203.969 40.592C202.686 41.2174 201.156 41.5288 199.376 41.5288C197.072 41.5288 195.03 40.9949 193.255 39.9245C191.478 38.8542 190.096 37.3315 189.107 35.3564C188.121 33.3813 187.627 31.0601 187.627 28.3953C187.627 25.7306 188.104 23.5083 189.058 21.5332C190.012 19.5581 191.352 18.0205 193.082 16.918C194.81 15.8155 196.842 15.2643 199.181 15.2643C200.99 15.2643 202.545 15.5585 203.845 16.1517C205.146 16.745 206.223 17.5508 207.079 18.5693V5.93018H213.051V5.93265ZM207.276 28.3953C207.276 26.8825 206.997 25.5254 206.436 24.324C205.877 23.1226 205.086 22.2006 204.068 21.5579C203.047 20.9177 201.845 20.5963 200.464 20.5963C199.013 20.5963 197.772 20.9177 196.736 21.5579C195.7 22.2006 194.909 23.1226 194.365 24.324C193.824 25.5254 193.552 26.8825 193.552 28.3953C193.552 29.9082 193.824 31.2677 194.365 32.4691C194.909 33.6705 195.708 34.5901 196.761 35.2328C197.816 35.873 199.05 36.1944 200.466 36.1944C201.883 36.1944 203.007 35.873 204.043 35.2328C205.079 34.5901 205.88 33.6705 206.438 32.4691C206.999 31.2677 207.279 29.9106 207.279 28.3953H207.276ZM241.933 15.8056V40.985H235.961V38.1225C235.138 39.1755 234.085 40.0061 232.802 40.6167C231.519 41.2248 229.986 41.5288 228.209 41.5288C225.905 41.5288 223.866 40.9949 222.088 39.9245C220.311 38.8542 218.937 37.3315 217.965 35.3564C216.994 33.3813 216.509 31.0601 216.509 28.3953C216.509 25.7306 216.986 23.5083 217.94 21.5332C218.895 19.5581 220.234 18.0205 221.965 16.918C223.693 15.8155 225.725 15.2643 228.063 15.2643C229.905 15.2643 231.502 15.5856 232.851 16.2259C234.198 16.8686 235.237 17.6992 235.961 18.7176V15.8056H241.933ZM236.156 28.3953C236.156 26.8825 235.877 25.5254 235.316 24.324C234.757 23.1226 233.966 22.2006 232.948 21.5579C231.927 20.9177 230.725 20.5963 229.344 20.5963C227.893 20.5963 226.652 20.9177 225.616 21.5579C224.58 22.2006 223.789 23.1226 223.245 24.324C222.704 25.5254 222.432 26.8825 222.432 28.3953C222.432 29.9082 222.704 31.2677 223.245 32.4691C223.789 33.6705 224.588 34.5901 225.641 35.2328C226.696 35.873 227.93 36.1944 229.346 36.1944C230.762 36.1944 231.887 35.873 232.923 35.2328C233.959 34.5901 234.76 33.6705 235.318 32.4691C235.879 31.2677 236.159 29.9106 236.159 28.3953H236.156ZM246.944 5.93265V40.9875H252.919V5.93265H246.944Z"></path>
+      <path d="M90.4526 30.5676C90.5729 30.7635 90.4319 31.0154 90.202 31.0154H73.146C72.9369 31.0154 72.7435 30.9044 72.6381 30.7237L55.223 0.878713C55.1087 0.682709 55.25 0.436523 55.477 0.436523H70.6366C71.4542 0.436523 72.2132 0.861139 72.641 1.55792L90.4526 30.5676ZM44.3307 14.5636C44.4453 14.7596 44.3039 15.006 44.0769 15.006H27.9392C27.7302 15.006 27.537 14.8951 27.4315 14.7147L19.3452 0.87889C19.2306 0.682886 19.372 0.436523 19.599 0.436523H34.8932C35.6245 0.436523 36.301 0.824672 36.67 1.45611L44.3307 14.5636ZM0.693037 32.9205C0.26627 32.1881 0.266527 31.2828 0.693708 30.5508L17.5918 1.59175C17.7052 1.3973 17.9862 1.39731 18.0997 1.59177L24.8632 13.1848L26.15 15.4323C26.254 15.6141 26.2535 15.8375 26.1487 16.0189L23.1089 21.2742L8.77152 45.9109C8.65817 46.1056 8.37685 46.1057 8.26338 45.911L0.693037 32.9205ZM27.4695 45.8582C27.048 46.5806 26.2745 47.0249 25.438 47.0249H10.3132C10.0863 47.0249 9.94493 46.7787 10.0593 46.5827L27.4744 16.7376C27.5798 16.557 27.7731 16.446 27.9823 16.446H44.1201C44.347 16.446 44.4884 16.6922 44.374 16.8882L27.4695 45.8582ZM45.6409 16.4672C45.374 16.0092 45.3744 15.443 45.6418 14.9853L53.4696 1.59201C53.5832 1.39754 53.8644 1.39787 53.9776 1.59261L71.3528 31.4822C71.459 31.6649 71.459 31.8906 71.3527 32.0733L63.3061 45.9106C63.1928 46.1054 62.9114 46.1056 62.7979 45.9108L45.6409 16.4672ZM81.976 45.9524C81.5424 46.6212 80.7995 47.0249 80.0025 47.0249H64.8055C64.5785 47.0249 64.4371 46.7785 64.5517 46.5825L72.638 32.7467C72.7435 32.5663 72.9367 32.4554 73.1457 32.4554H90.1865C90.4196 32.4554 90.56 32.7138 90.4332 32.9094L81.976 45.9524Z"></path>
+    </svg>
+  </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;guest&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;First Last&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;company&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Company&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;guest&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;First Last&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   state = { logo: null };
 
   nameRef = React.createRef();
-  companyRef = React.createRef();
   fileRef = React.createRef();
 
   key(field) { return 'eventtag:' + (this.props.slotId || 'x') + ':' + field; }
@@ -83,21 +76,14 @@ class Component extends DCLogic {
 
   applyText() {
     const n = this.nameRef.current;
-    const c = this.companyRef.current;
     if (n && n.textContent === '') {
       let v = null;
       try { v = localStorage.getItem(this.key('name')); } catch (e) {}
       n.textContent = (v != null) ? v : (this.props.guest || 'First Last');
     }
-    if (c && c.textContent === '') {
-      let v = null;
-      try { v = localStorage.getItem(this.key('company')); } catch (e) {}
-      c.textContent = (v != null) ? v : (this.props.company || 'Company');
-    }
   }
 
   saveName = (e) => { try { localStorage.setItem(this.key('name'), e.currentTarget.textContent); } catch (err) {} };
-  saveCompany = (e) => { try { localStorage.setItem(this.key('company'), e.currentTarget.textContent); } catch (err) {} };
 
   saveLogo(data) {
     this.setState({ logo: data });
@@ -159,34 +145,19 @@ class Component extends DCLogic {
     const editable = this.props.editable === true || this.props.editable === 'true';
     const glowOn = this.props.glow !== false && this.props.glow !== 'false';
 
-    const ink     = dark ? '#f2f2f2' : '#181818';
-    const sub     = dark ? '#a3a3a3' : '#727272';
-    const faint   = dark ? 'rgba(255,255,255,0.20)' : 'rgba(0,0,0,0.22)';
-    const cardBg  = dark ? '#181818' : '#ffffff';
-    const cardBd  = dark ? '1px solid rgba(255,255,255,0.10)' : '1px solid #e6e6e6';
-    const slotBd  = dark ? '1px dashed rgba(255,255,255,0.24)' : '1px dashed rgba(0,0,0,0.18)';
-    const slotBdSolid = dark ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(0,0,0,0.10)';
-    const slotInk = dark ? '#8b8b8b' : '#a0a0a0';
+    const ink    = dark ? '#f2f2f2' : '#181818';
+    const cardBg = dark ? '#181818' : '#ffffff';
+    const cardBd = dark ? '1px solid rgba(255,255,255,0.10)' : '1px solid #e6e6e6';
     const hasLogo = !!this.state.logo;
 
-    const nameStyle = {
-      margin: 0, color: ink, fontWeight: 500, fontSize: '13cqw',
-      lineHeight: '1.02', letterSpacing: '-0.022em', textWrap: 'balance',
-    };
-    const companyName = { color: ink, fontSize: '4.6cqw', fontWeight: 500, letterSpacing: '-0.01em' };
-    const slotBase = {
-      display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '1.8cqw',
-      height: '20cqw', minWidth: '30cqw', padding: '0 3.4cqw', boxSizing: 'border-box',
-      borderRadius: '1.8cqw', color: slotInk, overflow: 'hidden',
-    };
+    const glowBg = dark
+      ? 'radial-gradient(92% 130% at -10% 60%, rgba(127,238,100,0.32), rgba(127,238,100,0) 56%)'
+      : 'radial-gradient(92% 130% at -10% 60%, rgba(127,238,100,0.62), rgba(127,238,100,0) 56%)';
 
-    const glowFilled = dark
-      ? 'radial-gradient(120% 130% at 92% 4%, rgba(127,238,100,0.30), rgba(127,238,100,0) 50%), radial-gradient(90% 90% at 6% 102%, rgba(127,238,100,0.12), rgba(127,238,100,0) 55%)'
-      : 'radial-gradient(120% 130% at 92% 4%, rgba(127,238,100,0.55), rgba(127,238,100,0) 52%), radial-gradient(90% 90% at 6% 102%, rgba(127,238,100,0.30), rgba(127,238,100,0) 55%)';
-    const glowBlank = dark
-      ? 'radial-gradient(95% 135% at -8% 62%, rgba(127,238,100,0.34), rgba(127,238,100,0) 58%)'
-      : 'radial-gradient(95% 135% at -8% 62%, rgba(127,238,100,0.60), rgba(127,238,100,0) 58%)';
-    const glowBg = mode === 'blank' ? glowBlank : glowFilled;
+    const nameStyle = {
+      margin: 0, color: ink, fontWeight: 500, fontSize: '11.5cqw',
+      lineHeight: '1.04', letterSpacing: '-0.022em', textWrap: 'balance',
+    };
 
     return {
       isFilled: mode === 'filled',
@@ -194,17 +165,14 @@ class Component extends DCLogic {
       isGlow:   glowOn,
       editable: editable,
       readOnly: !editable,
-      hasLogo: hasLogo,
-      noLogo: !hasLogo,
-      logoSrc: this.state.logo,
-      guest:   this.props.guest || 'First Last',
-      company: this.props.company || 'Company',
+      hasLogo:  hasLogo,
+      noLogo:   !hasLogo,
+      logoSrc:  this.state.logo,
+      guest:    this.props.guest || 'First Last',
 
       nameRef: this.nameRef,
-      companyRef: this.companyRef,
       fileRef: this.fileRef,
       onName: this.saveName,
-      onCompany: this.saveCompany,
       pickLogo: this.pickLogo,
       onLogoFile: this.onLogoFile,
       onDrop: this.onDrop,
@@ -218,32 +186,22 @@ class Component extends DCLogic {
       },
       glow: { position: 'absolute', inset: 0, pointerEvents: 'none', background: glowBg },
 
-      nameWrap: { position: 'absolute', top: '7.5cqw', left: '7.5cqw', right: '7.5cqw' },
+      topBlock: {
+        position: 'absolute', top: '8cqw', left: '8cqw', right: '8cqw',
+        display: 'flex', flexDirection: 'column', gap: '4.5cqw', alignItems: 'flex-start',
+      },
       nameStyle,
       nameEdit: Object.assign({}, nameStyle, { outline: 'none', cursor: 'text', minHeight: '1em' }),
 
-      brandWrap: {
-        position: 'absolute', left: 0, right: 0, bottom: '6cqw',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', color: ink,
-      },
-      brandMark: { width: '24.6cqw', height: 'auto', display: 'block' },
+      logoSlot: { display: 'inline-flex', alignItems: 'center', cursor: 'pointer', maxWidth: '100%' },
+      logoImg: { maxHeight: '14cqw', maxWidth: '58cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
+      logoPlaceholder: { color: ink, fontSize: '6cqw', fontWeight: 500, letterSpacing: '-0.01em', whiteSpace: 'nowrap' },
 
-      footer: {
-        position: 'absolute', right: '7.5cqw', bottom: '7cqw',
-        display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2.4cqw',
+      brandWrap: {
+        position: 'absolute', right: '7cqw', bottom: '7cqw',
+        display: 'flex', justifyContent: 'flex-end', color: ink,
       },
-      slotBox: Object.assign({}, slotBase, hasLogo ? {
-        cursor: 'pointer', border: 'none', background: 'transparent',
-        minWidth: 0, padding: 0,
-      } : {
-        cursor: 'pointer', border: slotBd, background: 'transparent',
-      }),
-      slotStatic: Object.assign({}, slotBase, { border: slotBd }),
-      logoImg: { maxHeight: '17cqw', maxWidth: '52cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
-      iconStyle: { width: '4.6cqw', height: '4.6cqw', flex: 'none' },
-      logoLabel: { fontSize: '2.9cqw', fontWeight: 600, letterSpacing: '0.13em', textTransform: 'uppercase', whiteSpace: 'nowrap' },
-      companyName,
-      companyEdit: Object.assign({}, companyName, { outline: 'none', cursor: 'text', minWidth: '20cqw', textAlign: 'right' }),
+      brandMark: { width: '30cqw', height: 'auto', display: 'block' },
     };
   }
 }
