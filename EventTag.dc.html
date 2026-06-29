@@ -45,12 +45,6 @@
         </div>
       </sc-if>
 
-      <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
-        <div ref="{{ companyRef }}" contenteditable="true" spellcheck="false" onInput="{{ onCompany }}" style="{{ companyEdit }}"></div>
-      </sc-if>
-      <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
-        <div style="{{ companyName }}">{{ company }}</div>
-      </sc-if>
     </div>
   </sc-if>
 
@@ -208,10 +202,11 @@ class Component extends DCLogic {
         position: 'absolute', right: '7.5cqw', bottom: '7cqw',
         display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2.4cqw',
       },
-      slotBox: Object.assign({}, slotBase, {
-        cursor: 'pointer',
-        border: hasLogo ? slotBdSolid : slotBd,
-        background: hasLogo ? (dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.02)') : 'transparent',
+      slotBox: Object.assign({}, slotBase, hasLogo ? {
+        cursor: 'pointer', border: 'none', background: 'transparent',
+        minWidth: 0, padding: 0,
+      } : {
+        cursor: 'pointer', border: slotBd, background: 'transparent',
       }),
       slotStatic: Object.assign({}, slotBase, { border: slotBd }),
       logoImg: { maxHeight: '10.5cqw', maxWidth: '40cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
