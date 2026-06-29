@@ -109,14 +109,53 @@ class Component extends DCLogic {
   saveName = (e) => { try { localStorage.setItem(this.key('name'), e.currentTarget.textContent); } catch (err) {} };
   saveCompany = (e) => { try { localStorage.setItem(this.key('company'), e.currentTarget.textContent); } catch (err) {} };
 
+  saveLogo(data) {
+    this.setState({ logo: data });
+    try { localStorage.setItem(this.key('logo'), data); } catch (e) {}
+  }
+
+  // SVGs exported from design tools often lack a viewBox (or use width/height="100%"),
+  // so the browser falls back to an intrinsic 300x150 box and squishes the artwork.
+  // Recover the true aspect ratio before storing.
+  normalizeSvg(text) {
+    try {
+      const svg = new DOMParser().parseFromString(text, 'image/svg+xml').querySelector('svg');
+      if (!svg) return text;
+      if (!svg.getAttribute('viewBox')) {
+        const w = parseFloat(svg.getAttribute('width'));
+        const h = parseFloat(svg.getAttribute('height'));
+        if (w > 0 && h > 0) {
+          svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+        } else {
+          const tmp = svg.cloneNode(true);
+          tmp.setAttribute('style', 'position:absolute;left:-9999px;opacity:0;pointer-events:none');
+          document.body.appendChild(tmp);
+          try { const b = tmp.getBBox(); if (b.width > 0 && b.height > 0) svg.setAttribute('viewBox', b.x + ' ' + b.y + ' ' + b.width + ' ' + b.height); } catch (e) {}
+          tmp.remove();
+        }
+      }
+      // Pin width/height to the viewBox so the <img> has a definite intrinsic size
+      // with the correct aspect ratio (leaving them as "100%" or absent collapses it).
+      const vb = (svg.getAttribute('viewBox') || '').split(/[ ,]+/).map(Number);
+      if (vb.length === 4 && vb[2] > 0 && vb[3] > 0) {
+        svg.setAttribute('width', vb[2]);
+        svg.setAttribute('height', vb[3]);
+      }
+      svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      return new XMLSerializer().serializeToString(svg);
+    } catch (e) { return text; }
+  }
+
   readFile(file) {
     if (!file || !/^image\//.test(file.type)) return;
     const r = new FileReader();
-    r.onload = () => {
-      this.setState({ logo: r.result });
-      try { localStorage.setItem(this.key('logo'), r.result); } catch (e) {}
-    };
-    r.readAsDataURL(file);
+    if (/svg/.test(file.type)) {
+      r.onload = () => this.saveLogo('data:image/svg+xml;utf8,' + encodeURIComponent(this.normalizeSvg(r.result)));
+      r.readAsText(file);
+    } else {
+      r.onload = () => this.saveLogo(r.result);
+      r.readAsDataURL(file);
+    }
   }
   pickLogo = () => { if (this.fileRef.current) this.fileRef.current.click(); };
   onLogoFile = (e) => { const f = e.target.files && e.target.files[0]; this.readFile(f); e.target.value = ''; };
