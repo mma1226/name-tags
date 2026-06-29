@@ -1,0 +1,185 @@
+/* ============================================================
+   Modal — Colors & Type Foundations
+   Sourced from Figma "Modal Design System" (Foundations/Colors,
+   Foundations/Typography, Foundations/Elevation).
+   ============================================================ */
+
+/* Inter (UI) + Fira Mono (code/logs) — pulled in so their @font-face
+   rules live in the stylesheet closure. Until the user uploads local
+   font files, these load from Google Fonts; the token fallback stacks
+   render in the meantime. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Mono:wght@400;500;700&display=swap");
+
+@font-face {
+  font-family: "Goga";
+  src: url("./fonts/Goga-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Goga";
+  src: url("./fonts/Goga-Semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Inter + Fira Mono come from Google Fonts (linked in <head>).
+   Tosh Modal (used only for Avatar initials) and Basier Circle
+   are not available to us — fall back to Inter. */
+
+:root {
+  /* ---------- Base palette (Figma "Color guidelines") ---------- */
+  /* 100 swatches (most saturated) pulled verbatim from the file. */
+  --modal-red-100:        rgb(248, 113, 113);
+  --modal-pink-100:       rgb(255, 141, 230);
+  --modal-blue-100:       rgb(145, 200, 239);
+  --modal-orange-100:     rgb(255, 171,  94);
+  --modal-yellow-100:     rgb(255, 234, 113);
+  --modal-green-100:      rgb(127, 238, 100); /* signature Modal green */
+  --modal-pale-green-100: rgb(200, 249, 182);
+  --modal-gray-100:       rgb(255, 255, 255);
+
+  /* Data-viz accents used in charts */
+  --modal-teal:           rgb(  6, 146, 133);
+  --modal-peach:          rgb(246, 223, 200);
+  --modal-terracotta:     rgb(217, 134, 107);
+  --modal-other-gray:     rgb(109,  97,  97);
+
+  /* ---------- Neutral ramp (exact hex from swatch usage) ---------- */
+  --modal-gray-00:  rgb( 10,  10,  10);
+  --modal-gray-05:  rgb( 20,  20,  20);
+  --modal-gray-10:  rgb( 24,  24,  24); /* card / drawer background */
+  --modal-gray-15:  rgb( 28,  28,  28);
+  --modal-gray-20:  rgb( 36,  36,  36); /* table header background */
+  --modal-gray-30:  rgb( 39,  39,  39);
+  --modal-gray-40:  rgb( 47,  47,  47); /* default chip bg / input border */
+  --modal-gray-50:  rgb( 59,  59,  59);
+  --modal-gray-60:  rgb( 70,  70,  70); /* outline border */
+  --modal-gray-70:  rgb( 93,  93,  93);
+  --modal-gray-80:  rgb(114, 114, 114);
+  --modal-gray-85:  rgb(116, 116, 116); /* icon on outline button */
+  --modal-gray-90:  rgb(139, 139, 139); /* label text */
+  --modal-gray-92:  rgb(163, 163, 163); /* secondary text */
+  --modal-gray-94:  rgb(186, 186, 186); /* tertiary UI text */
+  --modal-gray-95:  rgb(209, 209, 209); /* body copy */
+  --modal-gray-97:  rgb(232, 232, 232); /* headings */
+  --modal-gray-99:  rgb(255, 255, 255);
+
+  /* ---------- Semantic — Background / Surface ---------- */
+  --bg-base:        var(--modal-gray-10);           /* app base */
+  --bg-offset:      var(--modal-gray-30);           /* selected callout */
+  --bg-highlight:   rgba(255, 255, 255, 0.06);      /* hover / separator */
+  --bg-canvas:      rgb(0, 0, 0);                   /* outermost */
+
+  /* Elevated surfaces (dropdown / drawer) */
+  --surface-10:     rgba(28, 28, 28, 0.90);         /* drawers, elev 10 */
+  --surface-50:     rgba(28, 28, 28, 0.90);         /* dropdowns, elev 50 */
+  --surface-90:     rgba(28, 28, 28, 0.95);         /* dialogs, elev 90 */
+  --surface-border: rgba(255, 255, 255, 0.06);
+  --surface-blur:   12px;
+
+  /* ---------- Semantic — Foreground ---------- */
+  --fg-1:           var(--modal-gray-99);           /* primary on dark */
+  --fg-2:           var(--modal-gray-97);           /* heading */
+  --fg-3:           var(--modal-gray-95);           /* body */
+  --fg-4:           var(--modal-gray-92);           /* secondary */
+  --fg-5:           var(--modal-gray-90);           /* muted */
+  --fg-6:           var(--modal-gray-85);           /* placeholder / icon */
+  --fg-7:           var(--modal-gray-70);           /* disabled */
+
+  /* ---------- Semantic — Border ---------- */
+  --border-1:       var(--modal-gray-40);           /* input default */
+  --border-2:       var(--modal-gray-60);           /* outline button */
+  --border-3:       var(--modal-gray-90);           /* focused input */
+  --border-subtle:  rgba(255, 255, 255, 0.06);
+
+  /* ---------- Semantic — Accent / Status ---------- */
+  --accent-primary:  var(--modal-green-100);        /* THE Modal green */
+  --accent-glow:     rgba(127, 238, 100, 0.50);     /* dot shadow */
+  --accent-wash:     rgba(127, 238, 100, 0.10);     /* active row bg */
+  --accent-ink:      rgb( 45,  67,  39);            /* green text on dark */
+  --accent-dim:      rgb( 86, 152,  70);            /* green secondary */
+
+  --status-success:  var(--modal-green-100);
+  --status-danger:   var(--modal-red-100);
+  --status-warning:  var(--modal-orange-100);
+  --status-info:     var(--modal-blue-100);
+  --status-pink:     var(--modal-pink-100);
+
+  --danger-wash:     rgba(248, 113, 113, 0.05);
+  --danger-ink:      rgb(158, 77, 77);
+
+  /* ---------- Type — families ---------- */
+  --font-sans:      "Inter", ui-sans-serif, system-ui, -apple-system,
+                    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display:   "Goga", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:      "Fira Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Modal uses Inter with `cv11` (single-story 'a') enabled. */
+  --font-feature-inter: "cv11" on, "ss01" on;
+
+  /* ---------- Type — scale (Inter / UI) ---------- */
+  --fs-xs:  10px;   --lh-xs:  15px;
+  --fs-sm:  12px;   --lh-sm:  16px;   /* chips, helper text */
+  --fs-md:  14px;   --lh-md:  20px;   /* body UI — dominant size */
+  --fs-lg:  16px;   --lh-lg:  24px;   /* prose */
+  --fs-xl:  18px;   --lh-xl:  28px;   /* section titles */
+  --fs-2xl: 20px;   --lh-2xl: 28px;
+  --fs-3xl: 24px;   --lh-3xl: 32px;
+  --fs-4xl: 36px;   --lh-4xl: 40px;
+
+  /* Display / Goga — h5 … h1 */
+  --fs-h5: 20px;    --lh-h5: 26px;
+  --fs-h4: 24px;    --lh-h4: 30px;
+  --fs-h3: 36px;    --lh-h3: 40px;
+  --fs-h2: 54px;    --lh-h2: 58px;
+  --fs-h1: 64px;    --lh-h1: 68px;
+
+  /* ---------- Radii (observed across components) ---------- */
+  --radius-1: 4px;  /* table cells, tags */
+  --radius-2: 6px;  /* buttons, cards */
+  --radius-3: 8px;  /* inputs */
+  --radius-pill: 12px; /* chips */
+
+  /* ---------- Shadows / Elevation ---------- */
+  --shadow-sm:  0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  --shadow-md:  0 2px 8px 0 rgba(24, 24, 24, 0.20);
+  --shadow-lg:  0 8px 24px 0 rgba(0, 0, 0, 0.40);
+  --shadow-xl:  0 16px 48px 0 rgba(0, 0, 0, 0.55);
+  --shadow-glow: 2px 2px 5px 0 rgba(127, 238, 100, 0.10);
+
+  /* ---------- Spacing (observed 4px grid) ---------- */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 42px;
+}
+
+/* ---------- Semantic type roles ---------- */
+html, body {
+  background: var(--bg-base);
+  color: var(--fg-3);
+  font-family: var(--font-sans);
+  font-feature-settings: var(--font-feature-inter);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.h-display { font-family: var(--font-display); font-weight: 400;
+  font-size: var(--fs-h1); line-height: var(--lh-h1); color: var(--fg-1); letter-spacing: -0.01em; }
+.h1 { font: 500 var(--fs-h1)/var(--lh-h1) var(--font-display); color: var(--fg-1); }
+.h2 { font: 400 var(--fs-h2)/var(--lh-h2) var(--font-display); color: var(--fg-1); }
+.h3 { font: 400 var(--fs-h3)/var(--lh-h3) var(--font-display); color: var(--fg-1); }
+.h4 { font: 500 var(--fs-h4)/var(--lh-h4) var(--font-sans);    color: var(--fg-2); }
+.h5 { font: 500 var(--fs-h5)/var(--lh-h5) var(--font-sans);    color: var(--fg-2); }
+
+.eyebrow { font: 500 var(--fs-sm)/var(--lh-sm) var(--font-sans);
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-5); }
+.body     { font: 400 var(--fs-lg)/var(--lh-lg) var(--font-sans); color: var(--fg-3); }
+.body-ui  { font: 400 var(--fs-md)/var(--lh-md) var(--font-sans); color: var(--fg-3); }
+.muted    { font: 400 var(--fs-md)/var(--lh-md) var(--font-sans); color: var(--fg-5); }
+.code     { font: 400 var(--fs-md)/var(--lh-md) var(--font-mono); color: var(--fg-3); }
+.kbd      { font: 500 var(--fs-sm)/var(--lh-sm) var(--font-mono); color: var(--fg-6);
+            background: var(--modal-gray-40); border-radius: 4px; padding: 2px 6px; }
+.label    { font: 500 var(--fs-md)/var(--lh-md) var(--font-sans); color: var(--fg-2); }
+.helper   { font: 400 var(--fs-sm)/var(--lh-sm) var(--font-sans); color: var(--fg-5); }

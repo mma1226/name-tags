@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/modal-design-system-43bc1a90-8e75-4ba3-9966-4a6941c90299/colors_and_type.css">
+</helmet>
+<div style="{{ card }}">
+  <sc-if value="{{ isGlow }}" hint-placeholder-val="{{ true }}">
+    <div style="{{ glow }}"></div>
+  </sc-if>
+
+  <sc-if value="{{ isFilled }}" hint-placeholder-val="{{ true }}">
+    <div style="{{ nameWrap }}">
+      <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
+        <div ref="{{ nameRef }}" contenteditable="true" spellcheck="false" onInput="{{ onName }}" style="{{ nameEdit }}"></div>
+      </sc-if>
+      <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
+        <div style="{{ nameStyle }}">{{ guest }}</div>
+      </sc-if>
+    </div>
+
+    <div style="{{ footer }}">
+      <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
+        <div style="{{ slotBox }}" onClick="{{ pickLogo }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" title="Click or drop an image to set this company's logo">
+          <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
+            <img src="{{ logoSrc }}" alt="" style="{{ logoImg }}" />
+          </sc-if>
+          <sc-if value="{{ noLogo }}" hint-placeholder-val="{{ true }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="{{ iconStyle }}"><path d="M12 3v12"></path><path d="m8 7 4-4 4 4"></path><path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"></path></svg>
+            <span style="{{ logoLabel }}">Upload logo</span>
+          </sc-if>
+        </div>
+        <input ref="{{ fileRef }}" type="file" accept="image/*" onChange="{{ onLogoFile }}" style="display:none" />
+      </sc-if>
+      <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
+        <div style="{{ slotStatic }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="{{ iconStyle }}"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="1.7"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+          <span style="{{ logoLabel }}">Logo</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
+        <div ref="{{ companyRef }}" contenteditable="true" spellcheck="false" onInput="{{ onCompany }}" style="{{ companyEdit }}"></div>
+      </sc-if>
+      <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
+        <div style="{{ companyName }}">{{ company }}</div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isBlank }}" hint-placeholder-val="{{ true }}">
+    <div style="{{ blankWrap }}">
+      <div style="{{ blankRow }}">
+        <div style="{{ lineLabel }}">Name</div>
+        <div style="{{ line }}"></div>
+      </div>
+      <div style="{{ blankRow }}">
+        <div style="{{ lineLabel }}">Company</div>
+        <div style="{{ line }}"></div>
+      </div>
+    </div>
+    <div style="{{ footer }}">
+      <div style="{{ slotStatic }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="{{ iconStyle }}"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="1.7"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+        <span style="{{ logoLabel }}">Logo</span>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;guest&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;First Last&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;company&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Company&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { logo: null };
+
+  nameRef = React.createRef();
+  companyRef = React.createRef();
+  fileRef = React.createRef();
+
+  key(field) { return 'eventtag:' + (this.props.slotId || 'x') + ':' + field; }
+
+  componentDidMount() {
+    if (!this.props.editable) return;
+    try {
+      const lg = localStorage.getItem(this.key('logo'));
+      if (lg) this.setState({ logo: lg });
+    } catch (e) {}
+    this.applyText();
+  }
+
+  componentDidUpdate() {
+    if (this.props.editable) this.applyText();
+  }
+
+  applyText() {
+    const n = this.nameRef.current;
+    const c = this.companyRef.current;
+    if (n && n.textContent === '') {
+      let v = null;
+      try { v = localStorage.getItem(this.key('name')); } catch (e) {}
+      n.textContent = (v != null) ? v : (this.props.guest || 'First Last');
+    }
+    if (c && c.textContent === '') {
+      let v = null;
+      try { v = localStorage.getItem(this.key('company')); } catch (e) {}
+      c.textContent = (v != null) ? v : (this.props.company || 'Company');
+    }
+  }
+
+  saveName = (e) => { try { localStorage.setItem(this.key('name'), e.currentTarget.textContent); } catch (err) {} };
+  saveCompany = (e) => { try { localStorage.setItem(this.key('company'), e.currentTarget.textContent); } catch (err) {} };
+
+  readFile(file) {
+    if (!file || !/^image\//.test(file.type)) return;
+    const r = new FileReader();
+    r.onload = () => {
+      this.setState({ logo: r.result });
+      try { localStorage.setItem(this.key('logo'), r.result); } catch (e) {}
+    };
+    r.readAsDataURL(file);
+  }
+  pickLogo = () => { if (this.fileRef.current) this.fileRef.current.click(); };
+  onLogoFile = (e) => { const f = e.target.files && e.target.files[0]; this.readFile(f); e.target.value = ''; };
+  onDrop = (e) => { e.preventDefault(); const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; this.readFile(f); };
+  onDragOver = (e) => { e.preventDefault(); };
+
+  renderVals() {
+    const theme = this.props.theme || 'white';
+    const mode = this.props.mode || 'filled';
+    const dark = theme === 'dark';
+    const editable = this.props.editable === true || this.props.editable === 'true';
+    const glowOn = this.props.glow !== false && this.props.glow !== 'false';
+
+    const ink     = dark ? '#f2f2f2' : '#181818';
+    const sub     = dark ? '#a3a3a3' : '#727272';
+    const faint   = dark ? 'rgba(255,255,255,0.20)' : 'rgba(0,0,0,0.22)';
+    const cardBg  = dark ? '#181818' : '#ffffff';
+    const cardBd  = dark ? '1px solid rgba(255,255,255,0.10)' : '1px solid #e6e6e6';
+    const slotBd  = dark ? '1px dashed rgba(255,255,255,0.24)' : '1px dashed rgba(0,0,0,0.18)';
+    const slotBdSolid = dark ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(0,0,0,0.10)';
+    const slotInk = dark ? '#8b8b8b' : '#a0a0a0';
+    const hasLogo = !!this.state.logo;
+
+    const nameStyle = {
+      margin: 0, color: ink, fontWeight: 500, fontSize: '13cqw',
+      lineHeight: '1.02', letterSpacing: '-0.022em', textWrap: 'balance',
+    };
+    const companyName = { color: ink, fontSize: '4.6cqw', fontWeight: 500, letterSpacing: '-0.01em' };
+    const slotBase = {
+      display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '1.8cqw',
+      height: '14.5cqw', minWidth: '30cqw', padding: '0 3.4cqw', boxSizing: 'border-box',
+      borderRadius: '1.8cqw', color: slotInk, overflow: 'hidden',
+    };
+
+    return {
+      isFilled: mode === 'filled',
+      isBlank:  mode === 'blank',
+      isGlow:   glowOn,
+      editable: editable,
+      readOnly: !editable,
+      hasLogo: hasLogo,
+      noLogo: !hasLogo,
+      logoSrc: this.state.logo,
+      guest:   this.props.guest || 'First Last',
+      company: this.props.company || 'Company',
+
+      nameRef: this.nameRef,
+      companyRef: this.companyRef,
+      fileRef: this.fileRef,
+      onName: this.saveName,
+      onCompany: this.saveCompany,
+      pickLogo: this.pickLogo,
+      onLogoFile: this.onLogoFile,
+      onDrop: this.onDrop,
+      onDragOver: this.onDragOver,
+
+      card: {
+        position: 'relative', width: '100%', aspectRatio: '3.375 / 2.3125',
+        background: cardBg, border: cardBd, borderRadius: '2.4cqw',
+        overflow: 'hidden', containerType: 'inline-size', boxSizing: 'border-box',
+        fontFamily: 'var(--font-sans)', fontFeatureSettings: '"cv11" on, "ss01" on',
+      },
+      glow: {
+        position: 'absolute', inset: 0, pointerEvents: 'none',
+        background: dark
+          ? 'radial-gradient(120% 130% at 92% 4%, rgba(127,238,100,0.30), rgba(127,238,100,0) 50%), radial-gradient(90% 90% at 6% 102%, rgba(127,238,100,0.12), rgba(127,238,100,0) 55%)'
+          : 'radial-gradient(120% 130% at 92% 4%, rgba(127,238,100,0.55), rgba(127,238,100,0) 52%), radial-gradient(90% 90% at 6% 102%, rgba(127,238,100,0.30), rgba(127,238,100,0) 55%)',
+      },
+
+      nameWrap: { position: 'absolute', top: '7.5cqw', left: '7.5cqw', right: '7.5cqw' },
+      nameStyle,
+      nameEdit: Object.assign({}, nameStyle, { outline: 'none', cursor: 'text', minHeight: '1em' }),
+
+      blankWrap: {
+        position: 'absolute', top: '8cqw', left: '7.5cqw', right: '7.5cqw',
+        display: 'flex', flexDirection: 'column', gap: '8.5cqw',
+      },
+      blankRow: { display: 'flex', flexDirection: 'column', gap: '1.4cqw' },
+      lineLabel: { color: sub, fontSize: '2.9cqw', fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase' },
+      line: { height: '9.5cqw', borderBottom: '0.45cqw solid ' + faint },
+
+      footer: {
+        position: 'absolute', right: '7.5cqw', bottom: '7cqw',
+        display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2.4cqw',
+      },
+      slotBox: Object.assign({}, slotBase, {
+        cursor: 'pointer',
+        border: hasLogo ? slotBdSolid : slotBd,
+        background: hasLogo ? (dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.02)') : 'transparent',
+      }),
+      slotStatic: Object.assign({}, slotBase, { border: slotBd }),
+      logoImg: { maxHeight: '10.5cqw', maxWidth: '40cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
+      iconStyle: { width: '4.6cqw', height: '4.6cqw', flex: 'none' },
+      logoLabel: { fontSize: '2.9cqw', fontWeight: 600, letterSpacing: '0.13em', textTransform: 'uppercase', whiteSpace: 'nowrap' },
+      companyName,
+      companyEdit: Object.assign({}, companyName, { outline: 'none', cursor: 'text', minWidth: '20cqw', textAlign: 'right' }),
+    };
+  }
+}
+</script>
+</body>
+</html>

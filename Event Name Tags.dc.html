@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/modal-design-system-43bc1a90-8e75-4ba3-9966-4a6941c90299/colors_and_type.css">
+  <script src="_ds/modal-design-system-43bc1a90-8e75-4ba3-9966-4a6941c90299/_ds_bundle.js"></script>
+  <style>
+    body { margin: 0; background: #0f0f0f; }
+    @page { size: letter portrait; margin: 0; }
+    @media print {
+      html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body { background: #fff !important; }
+      .screen-only { display: none !important; }
+      .screen-shell { padding: 0 !important; background: #fff !important; min-height: 0 !important; }
+      .print-stage { padding: 0 !important; margin: 0 !important; background: #fff !important; border: none !important; border-radius: 0 !important; }
+      .print-scaler { width: auto !important; height: auto !important; }
+      .print-sheet { transform: none !important; box-shadow: none !important; }
+      .print-section { margin: 0 !important; max-width: none !important; }
+    }
+  </style>
+</helmet>
+<div style="min-height:100vh; background:#0f0f0f; color:#e8e8e8; font-family:var(--font-sans); font-feature-settings:'cv11' on,'ss01' on; padding:56px clamp(20px,5vw,72px) 96px;" class="screen-shell">
+
+  <header class="screen-only" style="max-width:1080px; margin:0 auto 8px;">
+    <div style="font:600 12px/16px var(--font-sans); text-transform:uppercase; letter-spacing:0.14em; color:rgb(127,238,100);">Modal · Event collateral</div>
+    <h1 style="margin:10px 0 0; font:400 44px/48px var(--font-display); color:#fff; letter-spacing:-0.01em;">Event name tags</h1>
+    <p style="margin:12px 0 0; max-width:600px; font:400 15px/22px var(--font-sans); color:#a3a3a3;">Self-contained badge builder sized to Avery&nbsp;5395 adhesive labels (3.375&nbsp;&times;&nbsp;2.31&nbsp;in). Click a name or company to type over it, and click the lower-right slot to upload that guest&rsquo;s company logo — everything you change is saved in this browser. Use the controls below to set the printable sheet, then print.</p>
+  </header>
+
+  <section class="screen-only" style="max-width:1080px; margin:48px auto 0; display:flex; flex-direction:column; gap:14px;">
+    <div style="display:flex; align-items:baseline; gap:12px;">
+      <span style="font:500 13px/16px var(--font-sans); color:#e8e8e8;">v1 — Name + company</span>
+      <span style="font:400 13px/16px var(--font-sans); color:#747474;">editable · click to type, click the slot to upload a logo</span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">White</div>
+        <dc-import name="EventTag" theme="white" mode="filled" editable="true" slot-id="hero-white" glow="{{ glowAttr }}" guest="Jordan Avery" company="Northwind Labs" hint-size="100%,auto"></dc-import>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">Dark</div>
+        <dc-import name="EventTag" theme="dark" mode="filled" editable="true" slot-id="hero-dark" glow="{{ glowAttr }}" guest="Jordan Avery" company="Northwind Labs" hint-size="100%,auto"></dc-import>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen-only" style="max-width:1080px; margin:44px auto 0; display:flex; flex-direction:column; gap:14px;">
+    <div style="display:flex; align-items:baseline; gap:12px;">
+      <span style="font:500 13px/16px var(--font-sans); color:#e8e8e8;">v2 — Blank for write-in</span>
+      <span style="font:400 13px/16px var(--font-sans); color:#747474;">walk-ups &amp; on-site registration</span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">White</div>
+        <dc-import name="EventTag" theme="white" mode="blank" glow="{{ glowAttr }}" hint-size="100%,auto"></dc-import>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">Dark</div>
+        <dc-import name="EventTag" theme="dark" mode="blank" glow="{{ glowAttr }}" hint-size="100%,auto"></dc-import>
+      </div>
+    </div>
+  </section>
+
+  <section class="print-section" style="max-width:1080px; margin:56px auto 0;">
+    <div class="screen-only" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:20px; border-top:1px solid rgba(255,255,255,0.08); padding-top:24px;">
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <span style="font:500 13px/16px var(--font-sans); color:#e8e8e8;">Print sheet — Avery 5395</span>
+        <span style="font:400 13px/16px var(--font-sans); color:#747474;">8 badges per US&nbsp;Letter page · 2 columns × 4 rows</span>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:18px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.12em; color:#747474;">Theme</span>
+          <div style="{{ segWrap }}">
+            <button type="button" onClick="{{ setWhite }}" style="{{ segWhite }}">White</button>
+            <button type="button" onClick="{{ setDark }}" style="{{ segDark }}">Dark</button>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.12em; color:#747474;">Tags</span>
+          <div style="{{ segWrap }}">
+            <button type="button" onClick="{{ setFilled }}" style="{{ segFilled }}">With names</button>
+            <button type="button" onClick="{{ setBlank }}" style="{{ segBlank }}">Blank</button>
+          </div>
+        </div>
+        <button type="button" onClick="{{ toggleGlow }}" style="{{ glowBtn }}">Green glow</button>
+        <button type="button" onClick="{{ doPrint }}" style="{{ printBtn }}">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print sheet
+        </button>
+      </div>
+    </div>
+
+    <div class="print-stage" style="margin-top:24px; display:flex; justify-content:center; background:#1a1a1a; border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:28px; overflow:hidden;">
+      <div class="print-scaler" style="width:{{ scaledW }}px; height:{{ scaledH }}px;">
+        <div class="print-sheet" style="{{ sheetStyle }}">
+          <sc-for list="{{ sheetTags }}" as="t" hint-placeholder-count="8">
+            <dc-import name="EventTag" theme="{{ theme }}" mode="{{ mode }}" editable="true" slot-id="{{ t.id }}" glow="{{ glowAttr }}" guest="{{ t.name }}" company="{{ t.company }}" hint-size="3.375in,2.3125in"></dc-import>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <p class="screen-only" style="margin:14px auto 0; max-width:1080px; font:400 12px/18px var(--font-sans); color:#5d5d5d;">In the print dialog choose US&nbsp;Letter, 100% scale, and turn off &ldquo;Fit to page&rdquo; and headers/footers so badges land in the die-cut cells. Run a plain-paper test against a blank Avery 5395 sheet first. Logos and typed names are stored in this browser only — share the folder, not your edits.</p>
+  </section>
+
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" fill="#181818"></rect>
+      <rect x="30" y="38" width="40" height="28" rx="3" fill="#ffffff"></rect>
+      <rect x="35" y="44" width="22" height="4" rx="2" fill="#181818"></rect>
+      <rect x="35" y="52" width="14" height="3" rx="1.5" fill="#9a9a9a"></rect>
+      <circle cx="62" cy="58" r="3.5" fill="rgb(127,238,100)"></circle>
+    </svg>
+  </template>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;sheetTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Print sheet&quot;},&quot;sheetMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Print sheet&quot;},&quot;showGlow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Style&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      theme: props.sheetTheme || 'white',
+      mode: props.sheetMode || 'filled',
+      glow: props.showGlow !== false,
+    };
+  }
+
+  setWhite = () => this.setState({ theme: 'white' });
+  setDark = () => this.setState({ theme: 'dark' });
+  setFilled = () => this.setState({ mode: 'filled' });
+  setBlank = () => this.setState({ mode: 'blank' });
+  toggleGlow = () => this.setState((s) => ({ glow: !s.glow }));
+  doPrint = () => { try { window.print(); } catch (e) {} };
+
+  renderVals() {
+    const theme = this.state.theme;
+    const mode = this.state.mode;
+    const glow = this.state.glow;
+
+    const sheetTags = [
+      { id: 'sheet-1', name: 'Jordan Avery',     company: 'Northwind Labs' },
+      { id: 'sheet-2', name: 'Mara Okonkwo',     company: 'Helix Compute' },
+      { id: 'sheet-3', name: 'Devin Park',       company: 'Aperture AI' },
+      { id: 'sheet-4', name: 'Sofia Reyes',      company: 'Lumen Robotics' },
+      { id: 'sheet-5', name: 'Theo Lindqvist',   company: 'Vector Foundry' },
+      { id: 'sheet-6', name: 'Priya Nair',       company: 'Cobalt Systems' },
+      { id: 'sheet-7', name: 'Marcus Webb',      company: 'Orbital Data' },
+      { id: 'sheet-8', name: 'Nina Castellano',  company: 'Bright Mesa' },
+    ];
+
+    const scale = 0.62;
+
+    const segWrap = {
+      display: 'inline-flex', gap: '2px', padding: '3px',
+      background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)',
+      borderRadius: '8px',
+    };
+    const segBase = {
+      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+      height: '28px', padding: '0 12px', fontSize: '13px', fontWeight: 500,
+      fontFamily: 'var(--font-sans)', color: '#a3a3a3', background: 'transparent',
+      border: 'none', cursor: 'pointer', borderRadius: '5px',
+    };
+    const segOn = Object.assign({}, segBase, { color: 'rgb(127,238,100)', background: 'rgba(127,238,100,0.12)' });
+
+    const glowBtn = {
+      display: 'inline-flex', alignItems: 'center', height: '34px', padding: '0 14px',
+      borderRadius: '6px', fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
+      cursor: 'pointer',
+      color: glow ? 'rgb(127,238,100)' : '#a3a3a3',
+      background: glow ? 'rgba(127,238,100,0.12)' : 'rgba(255,255,255,0.04)',
+      border: glow ? '1px solid rgba(127,238,100,0.4)' : '1px solid rgba(255,255,255,0.12)',
+    };
+    const printBtn = {
+      display: 'inline-flex', alignItems: 'center', gap: '8px', height: '34px', padding: '0 16px',
+      borderRadius: '6px', fontSize: '14px', fontWeight: 500, fontFamily: 'var(--font-sans)',
+      cursor: 'pointer', color: 'rgb(127,238,100)', background: 'rgba(127,238,100,0.12)',
+      border: '1px solid rgba(127,238,100,0.45)',
+    };
+
+    return {
+      glowAttr: glow ? 'true' : 'false',
+      theme,
+      mode,
+      sheetTags,
+      scaledW: Math.round(816 * scale),
+      scaledH: Math.round(1056 * scale),
+
+      segWrap,
+      segWhite: theme === 'white' ? segOn : segBase,
+      segDark: theme === 'dark' ? segOn : segBase,
+      segFilled: mode === 'filled' ? segOn : segBase,
+      segBlank: mode === 'blank' ? segOn : segBase,
+      glowBtn,
+      printBtn,
+
+      setWhite: this.setWhite,
+      setDark: this.setDark,
+      setFilled: this.setFilled,
+      setBlank: this.setBlank,
+      toggleGlow: this.toggleGlow,
+      doPrint: this.doPrint,
+
+      sheetStyle: {
+        width: '8.5in', height: '11in', boxSizing: 'border-box', background: '#ffffff',
+        display: 'grid', gridTemplateColumns: 'repeat(2, 3.375in)', gridAutoRows: '2.3125in',
+        columnGap: '0.13in', rowGap: '0.25in', justifyContent: 'center', alignContent: 'start',
+        padding: '0.5in 0.81in',
+        transform: 'scale(' + scale + ')', transformOrigin: 'top left',
+        boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
