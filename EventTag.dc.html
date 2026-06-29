@@ -132,6 +132,31 @@ class Component extends DCLogic {
     } catch (e) { return text; }
   }
 
+  // Recolor an uploaded SVG (data URL) to solid #000000, preserving shape:
+  // any painted fill/stroke becomes black; "none" is left alone so outline
+  // logos stay outlines. Used for the white card.
+  blackenSvg(dataUrl) {
+    try {
+      const prefix = 'data:image/svg+xml;utf8,';
+      if (typeof dataUrl !== 'string' || dataUrl.indexOf(prefix) !== 0) return dataUrl;
+      const doc = new DOMParser().parseFromString(decodeURIComponent(dataUrl.slice(prefix.length)), 'image/svg+xml');
+      const root = doc.querySelector('svg');
+      if (!root) return dataUrl;
+      doc.querySelectorAll('*').forEach((el) => {
+        const f = el.getAttribute('fill');
+        if (f !== null && f !== 'none') el.setAttribute('fill', '#000000');
+        const s = el.getAttribute('stroke');
+        if (s !== null && s !== 'none') el.setAttribute('stroke', '#000000');
+        if (el.style) {
+          if (el.style.fill && el.style.fill !== 'none') el.style.fill = '#000000';
+          if (el.style.stroke && el.style.stroke !== 'none') el.style.stroke = '#000000';
+        }
+      });
+      // Default SVG fill is already black, so untouched elements render black too.
+      return prefix + encodeURIComponent(new XMLSerializer().serializeToString(root));
+    } catch (e) { return dataUrl; }
+  }
+
   readFile(file) {
     if (!file || !/^image\//.test(file.type)) return;
     const r = new FileReader();
@@ -161,6 +186,11 @@ class Component extends DCLogic {
     const cardBg  = dark ? '#181818' : '#ffffff';
     const cardBd  = dark ? '1px solid rgba(255,255,255,0.10)' : '1px solid #e6e6e6';
     const hasLogo = !!this.state.logo;
+    const isSvgLogo = typeof this.state.logo === 'string' && this.state.logo.indexOf('data:image/svg+xml') === 0;
+    // On the white card, render uploaded SVG logos as solid #000000. A CSS
+    // filter would work in the preview but is dropped by the canvas export, so
+    // recolor the SVG source itself — that survives both.
+    const displayLogo = (!dark && isSvgLogo) ? this.blackenSvg(this.state.logo) : this.state.logo;
 
     const glowBg = dark
       ? 'radial-gradient(92% 130% at -10% 60%, rgba(127,238,100,0.32), rgba(127,238,100,0) 56%)'
@@ -179,7 +209,7 @@ class Component extends DCLogic {
       readOnly: !editable,
       hasLogo:  hasLogo,
       noLogo:   !hasLogo,
-      logoSrc:  this.state.logo,
+      logoSrc:  displayLogo,
       logoClass: 'et-logo et-logo--preview' + (hasLogo ? '' : ' et-logo--empty'),
 
       nameRef: this.nameRef,
