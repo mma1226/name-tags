@@ -38,12 +38,12 @@
     </sc-if>
 
     <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
-      <div class="{{ logoClass }}" data-ph="Company Logo" style="{{ logoSlot }}" onClick="{{ pickLogo }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" title="Click or drop an image to set this company's logo">
+      <div class="{{ logoClass }}" data-ph="Company Logo" style="{{ logoSlot }}" title="Click or drop an image to set this company's logo">
         <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
           <img src="{{ logoSrc }}" alt="" style="{{ logoImg }}" />
         </sc-if>
+        <input ref="{{ fileRef }}" type="file" accept="image/*" onChange="{{ onLogoFile }}" onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" style="{{ fileOverlay }}" title="Click or drop an image to set this company's logo" />
       </div>
-      <input ref="{{ fileRef }}" type="file" accept="image/*" onChange="{{ onLogoFile }}" style="display:none" />
     </sc-if>
     <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
       <div class="{{ logoClass }}" data-ph="Company Logo" style="{{ logoSlot }}">
@@ -206,7 +206,8 @@ class Component extends DCLogic {
       nameStyle,
       nameEdit: Object.assign({}, nameStyle, { outline: 'none', cursor: 'text', minHeight: '1em' }),
 
-      logoSlot: { display: 'inline-flex', alignItems: 'center', cursor: 'pointer', maxWidth: '100%', boxSizing: 'border-box' },
+      logoSlot: { position: 'relative', display: 'inline-flex', alignItems: 'center', cursor: 'pointer', maxWidth: '100%', minWidth: '20cqw', minHeight: '8cqw', boxSizing: 'border-box' },
+      fileOverlay: { position: 'absolute', inset: 0, width: '100%', height: '100%', margin: 0, padding: 0, border: 'none', opacity: 0, cursor: 'pointer' },
       logoImg: { maxHeight: '14cqw', maxWidth: '58cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
 
       brandWrap: {
