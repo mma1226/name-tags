@@ -121,7 +121,7 @@ class Component extends DCLogic {
     try {
       const css = await this.fontCss();
       const rect = card.getBoundingClientRect();
-      const scale = 1080 / rect.width;                 // ~320 dpi across a 3.375in badge
+      const scale = 3840 / rect.width;                 // 3840px wide = 4K UHD (~1138 dpi across a 3.375in badge)
       const w = Math.round(rect.width * scale);
       const h = Math.round(rect.height * scale);
 
