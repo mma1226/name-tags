@@ -159,11 +159,34 @@ class Component extends DCLogic {
     } catch (e) { return dataUrl; }
   }
 
+  // Crop an SVG to just its graphical content: measure the rendered geometry
+  // (getBBox) and tighten the viewBox to it, dropping any baked-in padding/empty
+  // canvas. This makes the artwork sit flush at the box's top-left.
+  cropToContent(svgText) {
+    try {
+      const doc = new DOMParser().parseFromString(svgText, 'image/svg+xml');
+      const svg = doc.querySelector('svg');
+      if (!svg) return svgText;
+      const tmp = svg.cloneNode(true);
+      tmp.setAttribute('style', 'position:absolute;left:-99999px;top:0;opacity:0;pointer-events:none');
+      document.body.appendChild(tmp);
+      let bb = null;
+      try { bb = tmp.getBBox(); } catch (e) {}
+      tmp.remove();
+      if (!bb || bb.width <= 0 || bb.height <= 0) return svgText;
+      svg.setAttribute('viewBox', bb.x + ' ' + bb.y + ' ' + bb.width + ' ' + bb.height);
+      svg.setAttribute('width', bb.width);
+      svg.setAttribute('height', bb.height);
+      svg.setAttribute('preserveAspectRatio', 'xMinYMid meet');
+      return new XMLSerializer().serializeToString(svg);
+    } catch (e) { return svgText; }
+  }
+
   readFile(file) {
     if (!file || !/^image\//.test(file.type)) return;
     const r = new FileReader();
     if (/svg/.test(file.type)) {
-      r.onload = () => this.saveLogo('data:image/svg+xml;utf8,' + encodeURIComponent(this.normalizeSvg(r.result)));
+      r.onload = () => this.saveLogo('data:image/svg+xml;utf8,' + encodeURIComponent(this.cropToContent(this.normalizeSvg(r.result))));
       r.readAsText(file);
     } else {
       r.onload = () => this.saveLogo(r.result);
@@ -213,7 +236,7 @@ class Component extends DCLogic {
       hasLogo:  hasLogo,
       noLogo:   !hasLogo,
       logoSrc:  displayLogo,
-      logoClass: 'et-logo et-logo--preview' + (hasLogo ? '' : ' et-logo--empty'),
+      logoClass: 'et-logo' + (hasLogo ? '' : ' et-logo--preview et-logo--empty'),
 
       nameRef: this.nameRef,
       fileRef: this.fileRef,
@@ -239,7 +262,7 @@ class Component extends DCLogic {
       nameStyle,
       nameEdit: Object.assign({}, nameStyle, { outline: 'none', cursor: 'text', minHeight: '1em' }),
 
-      logoSlot: { position: 'relative', display: 'inline-flex', alignItems: 'center', cursor: 'pointer', maxWidth: '100%', minWidth: '20cqw', minHeight: '8cqw', boxSizing: 'border-box' },
+      logoSlot: { position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-start', cursor: 'pointer', maxWidth: '100%', minWidth: '20cqw', minHeight: '8cqw', boxSizing: 'border-box' },
       fileOverlay: { position: 'absolute', inset: 0, width: '100%', height: '100%', margin: 0, padding: 0, border: 'none', opacity: 0, cursor: 'pointer' },
       logoImg: { maxHeight: '14cqw', maxWidth: '58cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
 
