@@ -34,7 +34,12 @@
       <div ref="{{ nameRef }}" class="et-name" data-ph="Name" contenteditable="true" spellcheck="false" onInput="{{ onName }}" style="{{ nameEdit }}"></div>
     </sc-if>
     <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
-      <div class="et-name" data-ph="Name" style="{{ nameStyle }}"></div>
+      <sc-if value="{{ hasGuest }}" hint-placeholder-val="{{ true }}">
+        <div style="{{ nameStyle }}">{{ guest }}</div>
+      </sc-if>
+      <sc-if value="{{ noGuest }}" hint-placeholder-val="{{ true }}">
+        <div class="et-name" data-ph="Name" style="{{ nameStyle }}"></div>
+      </sc-if>
     </sc-if>
 
     <sc-if value="{{ editable }}" hint-placeholder-val="{{ true }}">
@@ -46,11 +51,15 @@
       </div>
     </sc-if>
     <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
-      <div class="{{ logoClass }}" data-ph="Company Logo" style="{{ logoSlot }}">
-        <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
-          <img src="{{ logoSrc }}" alt="" style="{{ logoImg }}" />
-        </sc-if>
-      </div>
+      <sc-if value="{{ hasLogo }}" hint-placeholder-val="{{ true }}">
+        <img src="{{ logoSrc }}" alt="" style="{{ logoImg }}" />
+      </sc-if>
+      <sc-if value="{{ companyText }}" hint-placeholder-val="{{ true }}">
+        <div style="{{ companyWordmark }}">{{ company }}</div>
+      </sc-if>
+      <sc-if value="{{ noCompanyMark }}" hint-placeholder-val="{{ true }}">
+        <div class="et-logo et-logo--preview et-logo--empty" data-ph="Company Logo" style="{{ logoSlot }}"></div>
+      </sc-if>
     </sc-if>
   </div>
 
@@ -62,7 +71,7 @@
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;guest&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;company&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;companyLogo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   state = { logo: null };
 
@@ -211,12 +220,18 @@ class Component extends DCLogic {
     const outline = dark ? 'rgba(255,255,255,0.22)' : 'rgba(0,0,0,0.22)';
     const cardBg  = dark ? '#181818' : '#ffffff';
     const cardBd  = dark ? '1px solid rgba(255,255,255,0.10)' : '1px solid #e6e6e6';
-    const hasLogo = !!this.state.logo;
-    const isSvgLogo = typeof this.state.logo === 'string' && this.state.logo.indexOf('data:image/svg+xml') === 0;
-    // Recolor uploaded SVG logos to match the theme's foreground: #000000 on
+    // Logo source: a passed-in company logo (CSV/batch) takes precedence over an
+    // uploaded one. Recolor SVG logos to match the theme's foreground: #000000 on
     // white, #E8FFD5 on dark. (Recolor the SVG source, not via CSS filter — a
     // filter renders in the preview but is dropped by the canvas export.)
-    const displayLogo = isSvgLogo ? this.recolorSvg(this.state.logo, dark ? '#E8FFD5' : '#000000') : this.state.logo;
+    const rawLogo = this.props.companyLogo || this.state.logo;
+    const hasLogo = !!rawLogo;
+    const isSvgLogo = typeof rawLogo === 'string' && rawLogo.indexOf('data:image/svg+xml') === 0;
+    const displayLogo = isSvgLogo ? this.recolorSvg(rawLogo, dark ? '#E8FFD5' : '#000000') : rawLogo;
+
+    // Read-only badges (CSV roster) can carry a guest name and a company name.
+    const guest = (this.props.guest || '').trim();
+    const company = (this.props.company || '').trim();
 
     const glowBg = dark
       ? 'radial-gradient(92% 130% at -10% 60%, rgba(127,238,100,0.32), rgba(127,238,100,0) 56%)'
@@ -237,6 +252,14 @@ class Component extends DCLogic {
       noLogo:   !hasLogo,
       logoSrc:  displayLogo,
       logoClass: 'et-logo' + (hasLogo ? '' : ' et-logo--preview et-logo--empty'),
+
+      guest:    guest,
+      hasGuest: !!guest,
+      noGuest:  !guest,
+      company:  company,
+      companyText:    !hasLogo && !!company,   // show the company name as text
+      noCompanyMark:  !hasLogo && !company,    // show the dashed placeholder
+      companyWordmark: { color: nameColor, fontSize: '6cqw', fontWeight: 600, letterSpacing: '-0.02em', whiteSpace: 'nowrap' },
 
       nameRef: this.nameRef,
       fileRef: this.fileRef,

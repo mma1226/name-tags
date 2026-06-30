@@ -19,18 +19,18 @@
   <header style="max-width:1080px; margin:0 auto 8px;">
     <div style="font:600 12px/16px var(--font-sans); text-transform:uppercase; letter-spacing:0.14em; color:rgb(127,238,100);">Modal · Event collateral</div>
     <h1 style="margin:10px 0 0; font:400 44px/48px var(--font-display); color:#fff; letter-spacing:-0.01em;">Event name tags</h1>
-    <p style="margin:12px 0 0; max-width:600px; font:400 15px/22px var(--font-sans); color:#a3a3a3;">Self-contained badge builder sized to Avery&nbsp;5395 adhesive labels (3.375&nbsp;&times;&nbsp;2.31&nbsp;in). Click a name or company to type over it, and click the lower-right slot to upload that guest&rsquo;s company logo — everything you change is saved in this browser. Use the buttons under each design to export a print-ready PNG.</p>
+    <p style="margin:12px 0 0; max-width:620px; font:400 15px/22px var(--font-sans); color:#a3a3a3;">Badge builder sized to Avery&nbsp;5395 adhesive labels (3.375&nbsp;&times;&nbsp;2.333&nbsp;in). Edit the template below, or load a guest-list CSV to auto-fill a badge per attendee and export the whole sheet as a print-ready Avery&nbsp;5395 PDF.</p>
   </header>
 
   <section style="max-width:1080px; margin:48px auto 0; display:flex; flex-direction:column; gap:14px;">
     <div style="display:flex; align-items:baseline; gap:12px;">
-      <span style="font:500 13px/16px var(--font-sans); color:#e8e8e8;">v1 — Name + company</span>
+      <span style="font:500 13px/16px var(--font-sans); color:#e8e8e8;">Template — Name + company</span>
       <span style="font:400 13px/16px var(--font-sans); color:#747474;">editable · click to type, click the slot to upload a logo</span>
     </div>
     <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px;">
       <div data-tag="v1-white" style="display:flex; flex-direction:column; gap:10px;">
         <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">White</div>
-        <dc-import name="EventTag" theme="white" mode="filled" editable="true" slot-id="hero-white" glow="true" guest="Jordan Avery" company="Northwind Labs" hint-size="100%,auto"></dc-import>
+        <dc-import name="EventTag" theme="white" mode="filled" editable="true" slot-id="hero-white" glow="true" hint-size="100%,auto"></dc-import>
         <div style="{{ btnRow }}">
           <button type="button" onClick="{{ exportV1White }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
           <button type="button" onClick="{{ pdfV1White }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
@@ -38,7 +38,7 @@
       </div>
       <div data-tag="v1-dark" style="display:flex; flex-direction:column; gap:10px;">
         <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">Dark</div>
-        <dc-import name="EventTag" theme="dark" mode="filled" editable="true" slot-id="hero-dark" glow="true" guest="Jordan Avery" company="Northwind Labs" hint-size="100%,auto"></dc-import>
+        <dc-import name="EventTag" theme="dark" mode="filled" editable="true" slot-id="hero-dark" glow="true" hint-size="100%,auto"></dc-import>
         <div style="{{ btnRow }}">
           <button type="button" onClick="{{ exportV1Dark }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
           <button type="button" onClick="{{ pdfV1Dark }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
@@ -47,29 +47,46 @@
     </div>
   </section>
 
-  <section style="max-width:1080px; margin:44px auto 0; display:flex; flex-direction:column; gap:14px;">
+  <section style="max-width:1080px; margin:56px auto 0; display:flex; flex-direction:column; gap:18px; border-top:1px solid rgba(255,255,255,0.08); padding-top:32px;">
     <div style="display:flex; align-items:baseline; gap:12px;">
-      <span style="font:500 13px/16px var(--font-sans); color:#e8e8e8;">v2 — Blank for write-in</span>
-      <span style="font:400 13px/16px var(--font-sans); color:#747474;">walk-ups &amp; on-site registration</span>
+      <span style="font:500 13px/16px var(--font-sans); color:#e8e8e8;">Roster — from CSV</span>
+      <span style="font:400 13px/16px var(--font-sans); color:#747474;">one badge per row · names auto-filled · 8 per Avery 5395 page</span>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px;">
-      <div data-tag="v2-white" style="display:flex; flex-direction:column; gap:10px;">
-        <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">White</div>
-        <dc-import name="EventTag" theme="white" mode="blank" glow="true" hint-size="100%,auto"></dc-import>
-        <div style="{{ btnRow }}">
-          <button type="button" onClick="{{ exportV2White }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
-          <button type="button" onClick="{{ pdfV2White }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
+
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px;">
+      <label style="{{ uploadBtn }}">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"></path><path d="m7 8 5-5 5 5"></path><path d="M5 21h14"></path></svg>
+        Load CSV
+        <input type="file" accept=".csv,text/csv" onChange="{{ onCsv }}" style="display:none" />
+      </label>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.12em; color:#747474;">Theme</span>
+        <div style="{{ segWrap }}">
+          <button type="button" onClick="{{ setWhite }}" style="{{ segWhite }}">White</button>
+          <button type="button" onClick="{{ setDark }}" style="{{ segDark }}">Dark</button>
         </div>
       </div>
-      <div data-tag="v2-dark" style="display:flex; flex-direction:column; gap:10px;">
-        <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">Dark</div>
-        <dc-import name="EventTag" theme="dark" mode="blank" glow="true" hint-size="100%,auto"></dc-import>
-        <div style="{{ btnRow }}">
-          <button type="button" onClick="{{ exportV2Dark }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
-          <button type="button" onClick="{{ pdfV2Dark }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
-        </div>
-      </div>
+      <sc-if value="{{ hasAttendees }}" hint-placeholder-val="{{ true }}">
+        <button type="button" onClick="{{ exportRoster }}" style="{{ rosterBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>{{ rosterLabel }}</button>
+      </sc-if>
+      <sc-if value="{{ busy }}" hint-placeholder-val="{{ true }}">
+        <span style="font:400 13px/16px var(--font-sans); color:rgb(127,238,100);">{{ progress }}</span>
+      </sc-if>
     </div>
+
+    <sc-if value="{{ noAttendees }}" hint-placeholder-val="{{ true }}">
+      <p style="margin:0; max-width:620px; font:400 13px/20px var(--font-sans); color:#6f6f6f;">Upload a CSV with columns <strong style="color:#8f8f8f;">first_name, last_name, company</strong> (extra columns are ignored). Each row becomes a badge with the name filled in; companies with a baked-in logo show it, the rest show the company name. Then export the whole list as an Avery&nbsp;5395 PDF.</p>
+    </sc-if>
+
+    <sc-if value="{{ hasAttendees }}" hint-placeholder-val="{{ true }}">
+      <div data-roster style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin-top:4px;">
+        <sc-for list="{{ attendees }}" as="a" hint-placeholder-count="4">
+          <div data-roster-card style="display:flex; flex-direction:column; gap:6px;">
+            <dc-import name="EventTag" theme="{{ theme }}" mode="filled" glow="true" slot-id="{{ a.slotId }}" guest="{{ a.name }}" company="{{ a.company }}" company-logo="{{ a.logo }}" hint-size="100%,auto"></dc-import>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
   </section>
 
   <template id="__bundler_thumbnail">
@@ -86,15 +103,115 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{}">
 class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { attendees: [], theme: 'white', busy: false, progress: '' };
+  }
+
+  // company (lowercased) -> logo data URL. Logos baked in here render in the
+  // badge and recolor per theme; companies absent from the map fall back to
+  // showing the company name as a wordmark.
+  LOGOS = {
+    modal: 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 91 48'><path fill='#000' d='M90.4526 30.5676C90.5729 30.7635 90.4319 31.0154 90.202 31.0154H73.146C72.9369 31.0154 72.7435 30.9044 72.6381 30.7237L55.223 0.878713C55.1087 0.682709 55.25 0.436523 55.477 0.436523H70.6366C71.4542 0.436523 72.2132 0.861139 72.641 1.55792L90.4526 30.5676ZM44.3307 14.5636C44.4453 14.7596 44.3039 15.006 44.0769 15.006H27.9392C27.7302 15.006 27.537 14.8951 27.4315 14.7147L19.3452 0.87889C19.2306 0.682886 19.372 0.436523 19.599 0.436523H34.8932C35.6245 0.436523 36.301 0.824672 36.67 1.45611L44.3307 14.5636ZM0.693037 32.9205C0.26627 32.1881 0.266527 31.2828 0.693708 30.5508L17.5918 1.59175C17.7052 1.3973 17.9862 1.39731 18.0997 1.59177L24.8632 13.1848L26.15 15.4323C26.254 15.6141 26.2535 15.8375 26.1487 16.0189L23.1089 21.2742L8.77152 45.9109C8.65817 46.1056 8.37685 46.1057 8.26338 45.911L0.693037 32.9205ZM27.4695 45.8582C27.048 46.5806 26.2745 47.0249 25.438 47.0249H10.3132C10.0863 47.0249 9.94493 46.7787 10.0593 46.5827L27.4744 16.7376C27.5798 16.557 27.7731 16.446 27.9823 16.446H44.1201C44.347 16.446 44.4884 16.6922 44.374 16.8882L27.4695 45.8582ZM45.6409 16.4672C45.374 16.0092 45.3744 15.443 45.6418 14.9853L53.4696 1.59201C53.5832 1.39754 53.8644 1.39787 53.9776 1.59261L71.3528 31.4822C71.459 31.6649 71.459 31.8906 71.3527 32.0733L63.3061 45.9106C63.1928 46.1054 62.9114 46.1056 62.7979 45.9108L45.6409 16.4672ZM81.976 45.9524C81.5424 46.6212 80.7995 47.0249 80.0025 47.0249H64.8055C64.5785 47.0249 64.4371 46.7785 64.5517 46.5825L72.638 32.7467C72.7435 32.5663 72.9367 32.4554 73.1457 32.4554H90.1865C90.4196 32.4554 90.56 32.7138 90.4332 32.9094L81.976 45.9524Z'/></svg>"
+    ),
+  };
+
+  companyLogo(company) {
+    const key = (company || '').toLowerCase().trim();
+    return this.LOGOS[key] || '';
+  }
+
+  // RFC 4180-ish CSV parser (handles quoted fields with commas + newlines).
+  csvRows(text) {
+    const s = String(text).replace(/\r\n?/g, '\n');
+    const rows = []; let row = []; let field = ''; let inq = false; let i = 0;
+    while (i < s.length) {
+      const c = s[i];
+      if (inq) {
+        if (c === '"') { if (s[i + 1] === '"') { field += '"'; i += 2; continue; } inq = false; i++; continue; }
+        field += c; i++; continue;
+      }
+      if (c === '"') { inq = true; i++; continue; }
+      if (c === ',') { row.push(field); field = ''; i++; continue; }
+      if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; i++; continue; }
+      field += c; i++;
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+    return rows;
+  }
+
+  parseCsv(text) {
+    const rows = this.csvRows(text);
+    if (!rows.length) return [];
+    const start = /first[_ ]?name/i.test((rows[0][0] || '')) ? 1 : 0;
+    const out = [];
+    for (let i = start; i < rows.length; i++) {
+      const r = rows[i];
+      const first = (r[0] || '').trim();
+      const last = (r[1] || '').trim();
+      const company = (r[2] || '').trim();
+      if (!first && !last) continue;
+      out.push({
+        name: (first + ' ' + last).trim(),
+        company: company,
+        logo: this.companyLogo(company),
+        slotId: 'roster-' + i,
+      });
+    }
+    return out;
+  }
+
+  onCsv = (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try { this.setState({ attendees: this.parseCsv(String(r.result)) }); }
+      catch (err) { alert('Could not parse the CSV: ' + (err && err.message ? err.message : err)); }
+    };
+    r.readAsText(f);
+    e.target.value = '';
+  };
+
+  setWhite = () => this.setState({ theme: 'white' });
+  setDark = () => this.setState({ theme: 'dark' });
+
+  // Lay every roster badge out 8-up across Avery 5395 sheets and save one PDF.
+  exportRoster = async () => {
+    if (this.state.busy) return;
+    const cards = [...document.querySelectorAll('[data-roster-card] .et-card')];
+    if (!cards.length) return;
+    try {
+      this.setState({ busy: true, progress: 'Preparing…' });
+      await this.loadJsPdf();
+      await this.fontCss();
+      const doc = new window.jspdf.jsPDF({ unit: 'in', format: 'letter', orientation: 'portrait' });
+      const LW = 3.375, LH = 2.333;
+      const cols = [0.688, 4.437];
+      const rows = [0.594, 3.087, 5.580, 8.073];
+      for (let i = 0; i < cards.length; i++) {
+        const pos = i % 8;
+        if (i > 0 && pos === 0) doc.addPage();
+        this.setState({ progress: 'Rendering ' + (i + 1) + ' / ' + cards.length + '…' });
+        const canvas = await this.rasterize(cards[i], 1100, true);
+        // JPEG: the print cells are opaque rectangles, so no alpha is needed —
+        // keeps a 24-badge sheet to a few MB instead of >100MB of raw PNG.
+        doc.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', cols[pos % 2], rows[Math.floor(pos / 2)], LW, LH);
+      }
+      doc.save('name-tags-avery5395.pdf');
+    } catch (e) {
+      console.error('[roster pdf] failed', e);
+      alert('PDF export failed: ' + (e && e.message ? e.message : e));
+    } finally {
+      this.setState({ busy: false, progress: '' });
+    }
+  };
+
   exportV1White = () => this.exportBadge('[data-tag="v1-white"] .et-card', 'name-tag-v1-white');
   exportV1Dark  = () => this.exportBadge('[data-tag="v1-dark"] .et-card',  'name-tag-v1-dark');
-  exportV2White = () => this.exportBadge('[data-tag="v2-white"] .et-card', 'name-tag-v2-white');
-  exportV2Dark  = () => this.exportBadge('[data-tag="v2-dark"] .et-card',  'name-tag-v2-dark');
-
   pdfV1White = () => this.exportPdf('[data-tag="v1-white"] .et-card', 'name-tags-v1-white');
   pdfV1Dark  = () => this.exportPdf('[data-tag="v1-dark"] .et-card',  'name-tags-v1-dark');
-  pdfV2White = () => this.exportPdf('[data-tag="v2-white"] .et-card', 'name-tags-v2-white');
-  pdfV2Dark  = () => this.exportPdf('[data-tag="v2-dark"] .et-card',  'name-tags-v2-dark');
 
   // Build a <style> string with the brand fonts inlined as data URLs so the
   // rasterized SVG renders Goga + Inter exactly, with no external requests.
@@ -119,7 +236,7 @@ class Component extends DCLogic {
       const re = /\/\*\s*([\w-]+)\s*\*\/\s*@font-face\s*\{([^}]+)\}/g;
       let m;
       while ((m = re.exec(gcss))) {
-        if (m[1] !== 'latin') continue; // English badges only need the latin subset
+        if (m[1] !== 'latin') continue;
         const body = m[2];
         const weight = (body.match(/font-weight:\s*(\d+)/) || [])[1] || '400';
         const url = (body.match(/url\((https:\/\/[^)]+\.woff2)\)/) || [])[1];
@@ -134,15 +251,14 @@ class Component extends DCLogic {
 
   // Render a card to a canvas via SVG foreignObject + embedded fonts, then draw
   // the logo on directly (nested foreignObject images don't reliably rasterize).
-  // targetW = output width in px. square = fill the Avery trim rectangle
-  // (no rounded corners / border) for print.
+  // targetW = output width in px. square = fill the Avery trim rectangle.
   async rasterize(card, targetW, square) {
     const css = await this.fontCss();
     const rect = card.getBoundingClientRect();
     const w = Math.round(targetW);
     const h = Math.round(square ? targetW / (3.375 / 2.333) : targetW * (rect.height / rect.width));
 
-    const liveLogo = card.querySelector('.et-logo img');
+    const liveLogo = card.querySelector('img');
     let logoBox = null;
     if (liveLogo && liveLogo.getAttribute('src')) {
       const lr = liveLogo.getBoundingClientRect();
@@ -157,12 +273,11 @@ class Component extends DCLogic {
 
     const clone = card.cloneNode(true);
     clone.querySelectorAll('input').forEach((n) => n.remove());
-    clone.querySelectorAll('.et-logo img').forEach((n) => n.remove());
+    clone.querySelectorAll('img').forEach((n) => n.remove());
     clone.style.width = w + 'px';
     clone.style.height = h + 'px';
     clone.style.margin = '0';
     if (square) { clone.style.borderRadius = '0'; clone.style.border = 'none'; }
-    // Resolve the design-system font variables inside the isolated SVG.
     clone.style.setProperty('--font-sans', '"Inter", ui-sans-serif, system-ui, sans-serif');
     clone.style.setProperty('--font-display', '"Goga", "Inter", ui-sans-serif, system-ui, sans-serif');
 
@@ -176,8 +291,6 @@ class Component extends DCLogic {
     const img = new Image();
     img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
     await img.decode();
-    // setTimeout (not requestAnimationFrame, which can stall when the tab isn't
-    // painting) so the render never hangs.
     await new Promise((r) => setTimeout(r, 30));
 
     const canvas = document.createElement('canvas');
@@ -227,15 +340,13 @@ class Component extends DCLogic {
     return this._jspdf;
   }
 
-  // Lay the badge out 8-up on a US Letter sheet at Avery 5395 positions and save
-  // as PDF. Label 3.375x2.333in, 2 cols x 4 rows, symmetric 0.688/0.594in
-  // margins (pitch 3.749 x 2.493in). The image fills each die-cut cell.
+  // Single design, 8-up on one Avery 5395 sheet.
   async exportPdf(selector, filename) {
     const card = document.querySelector(selector);
     if (!card) return;
     try {
       await this.loadJsPdf();
-      const canvas = await this.rasterize(card, 1350, true); // ~400 dpi per 3.375in cell
+      const canvas = await this.rasterize(card, 1350, true);
       const png = canvas.toDataURL('image/png');
       const doc = new window.jspdf.jsPDF({ unit: 'in', format: 'letter', orientation: 'portrait' });
       const LW = 3.375, LH = 2.333;
@@ -252,16 +363,30 @@ class Component extends DCLogic {
   }
 
   renderVals() {
+    const dark = this.state.theme === 'dark';
+    const count = this.state.attendees.length;
+
+    const seg = {
+      display: 'inline-flex', gap: '2px', padding: '3px',
+      background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px',
+    };
+    const segBase = {
+      display: 'inline-flex', alignItems: 'center', height: '26px', padding: '0 12px',
+      fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
+      color: '#a3a3a3', background: 'transparent', border: 'none', cursor: 'pointer', borderRadius: '5px',
+    };
+    const segOn = Object.assign({}, segBase, { color: 'rgb(127,238,100)', background: 'rgba(127,238,100,0.12)' });
+    const greenBtn = {
+      display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+      height: '34px', padding: '0 14px', borderRadius: '6px',
+      fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
+      cursor: 'pointer', color: 'rgb(127,238,100)',
+      background: 'rgba(127,238,100,0.10)', border: '1px solid rgba(127,238,100,0.35)',
+    };
+
     return {
       btnRow: { display: 'flex', gap: '8px' },
-      exportBtn: {
-        flex: '1',
-        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-        height: '34px', padding: '0 14px', borderRadius: '6px',
-        fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
-        cursor: 'pointer', color: 'rgb(127,238,100)',
-        background: 'rgba(127,238,100,0.10)', border: '1px solid rgba(127,238,100,0.35)',
-      },
+      exportBtn: Object.assign({ flex: '1' }, greenBtn),
       pdfBtn: {
         flex: '1',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
@@ -270,14 +395,28 @@ class Component extends DCLogic {
         cursor: 'pointer', color: '#e8e8e8',
         background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.16)',
       },
+      uploadBtn: Object.assign({}, greenBtn, { height: '36px', padding: '0 16px' }),
+      rosterBtn: Object.assign({}, greenBtn, { height: '36px', padding: '0 16px' }),
+      segWrap: seg,
+      segWhite: !dark ? segOn : segBase,
+      segDark: dark ? segOn : segBase,
+
       exportV1White: this.exportV1White,
       exportV1Dark: this.exportV1Dark,
-      exportV2White: this.exportV2White,
-      exportV2Dark: this.exportV2Dark,
       pdfV1White: this.pdfV1White,
       pdfV1Dark: this.pdfV1Dark,
-      pdfV2White: this.pdfV2White,
-      pdfV2Dark: this.pdfV2Dark,
+
+      onCsv: this.onCsv,
+      setWhite: this.setWhite,
+      setDark: this.setDark,
+      exportRoster: this.exportRoster,
+      attendees: this.state.attendees,
+      hasAttendees: count > 0,
+      noAttendees: count === 0,
+      theme: this.state.theme,
+      busy: this.state.busy,
+      progress: this.state.progress,
+      rosterLabel: 'Download Avery 5395 PDF (' + count + ')',
     };
   }
 }
