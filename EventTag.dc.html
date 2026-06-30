@@ -16,11 +16,11 @@
     .et-name:empty::before { content: attr(data-ph); color: var(--et-ph, #9a9a9a); }
     .et-logo--empty::before {
       content: attr(data-ph); color: var(--et-ph, #9a9a9a);
-      font-size: 6cqw; font-weight: 500; letter-spacing: -0.01em; white-space: nowrap;
+      font-size: 4.4cqw; font-weight: 500; letter-spacing: -0.01em; white-space: nowrap;
     }
     .et-logo--preview {
-      border: 0.5cqw dashed var(--et-outline, rgba(0,0,0,0.22));
-      border-radius: 2.4cqw; padding: 2.6cqw 4cqw;
+      border: 0.4cqw dashed var(--et-outline, rgba(0,0,0,0.22));
+      border-radius: 1.6cqw; padding: 1.8cqw 2.6cqw;
     }
   </style>
 </helmet>
@@ -262,7 +262,7 @@ class Component extends DCLogic {
       nameStyle,
       nameEdit: Object.assign({}, nameStyle, { outline: 'none', cursor: 'text', minHeight: '1em' }),
 
-      logoSlot: { position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-start', cursor: 'pointer', maxWidth: '100%', minWidth: '20cqw', minHeight: '8cqw', boxSizing: 'border-box' },
+      logoSlot: { position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-start', cursor: 'pointer', maxWidth: '100%', minWidth: '0', minHeight: '0', boxSizing: 'border-box' },
       fileOverlay: { position: 'absolute', inset: 0, width: '100%', height: '100%', margin: 0, padding: 0, border: 'none', opacity: 0, cursor: 'pointer' },
       logoImg: { maxHeight: '14cqw', maxWidth: '58cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
 
