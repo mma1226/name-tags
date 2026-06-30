@@ -164,6 +164,13 @@ class Component extends DCLogic {
           if (el.style.stroke && el.style.stroke !== 'none') el.style.stroke = color;
         }
       });
+      // Rewrite fills/strokes declared in internal <style> CSS (e.g. Illustrator
+      // exports with .st0/.st1 classes), which override presentation attributes.
+      doc.querySelectorAll('style').forEach((st) => {
+        st.textContent = st.textContent
+          .replace(/(fill\s*:\s*)(?!none)[^;}!]+/gi, '$1' + color)
+          .replace(/(stroke\s*:\s*)(?!none)[^;}!]+/gi, '$1' + color);
+      });
       return prefix + encodeURIComponent(new XMLSerializer().serializeToString(root));
     } catch (e) { return dataUrl; }
   }
