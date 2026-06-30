@@ -31,12 +31,18 @@
       <div data-tag="v1-white" style="display:flex; flex-direction:column; gap:10px;">
         <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">White</div>
         <dc-import name="EventTag" theme="white" mode="filled" editable="true" slot-id="hero-white" glow="true" guest="Jordan Avery" company="Northwind Labs" hint-size="100%,auto"></dc-import>
-        <button type="button" onClick="{{ exportV1White }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>Download PNG</button>
+        <div style="{{ btnRow }}">
+          <button type="button" onClick="{{ exportV1White }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
+          <button type="button" onClick="{{ pdfV1White }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
+        </div>
       </div>
       <div data-tag="v1-dark" style="display:flex; flex-direction:column; gap:10px;">
         <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">Dark</div>
         <dc-import name="EventTag" theme="dark" mode="filled" editable="true" slot-id="hero-dark" glow="true" guest="Jordan Avery" company="Northwind Labs" hint-size="100%,auto"></dc-import>
-        <button type="button" onClick="{{ exportV1Dark }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>Download PNG</button>
+        <div style="{{ btnRow }}">
+          <button type="button" onClick="{{ exportV1Dark }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
+          <button type="button" onClick="{{ pdfV1Dark }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
+        </div>
       </div>
     </div>
   </section>
@@ -50,12 +56,18 @@
       <div data-tag="v2-white" style="display:flex; flex-direction:column; gap:10px;">
         <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">White</div>
         <dc-import name="EventTag" theme="white" mode="blank" glow="true" hint-size="100%,auto"></dc-import>
-        <button type="button" onClick="{{ exportV2White }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>Download PNG</button>
+        <div style="{{ btnRow }}">
+          <button type="button" onClick="{{ exportV2White }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
+          <button type="button" onClick="{{ pdfV2White }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
+        </div>
       </div>
       <div data-tag="v2-dark" style="display:flex; flex-direction:column; gap:10px;">
         <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">Dark</div>
         <dc-import name="EventTag" theme="dark" mode="blank" glow="true" hint-size="100%,auto"></dc-import>
-        <button type="button" onClick="{{ exportV2Dark }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>Download PNG</button>
+        <div style="{{ btnRow }}">
+          <button type="button" onClick="{{ exportV2Dark }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
+          <button type="button" onClick="{{ pdfV2Dark }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
+        </div>
       </div>
     </div>
   </section>
@@ -78,6 +90,11 @@ class Component extends DCLogic {
   exportV1Dark  = () => this.exportBadge('[data-tag="v1-dark"] .et-card',  'name-tag-v1-dark');
   exportV2White = () => this.exportBadge('[data-tag="v2-white"] .et-card', 'name-tag-v2-white');
   exportV2Dark  = () => this.exportBadge('[data-tag="v2-dark"] .et-card',  'name-tag-v2-dark');
+
+  pdfV1White = () => this.exportPdf('[data-tag="v1-white"] .et-card', 'name-tags-v1-white');
+  pdfV1Dark  = () => this.exportPdf('[data-tag="v1-dark"] .et-card',  'name-tags-v1-dark');
+  pdfV2White = () => this.exportPdf('[data-tag="v2-white"] .et-card', 'name-tags-v2-white');
+  pdfV2Dark  = () => this.exportPdf('[data-tag="v2-dark"] .et-card',  'name-tags-v2-dark');
 
   // Build a <style> string with the brand fonts inlined as data URLs so the
   // rasterized SVG renders Goga + Inter exactly, with no external requests.
@@ -115,70 +132,74 @@ class Component extends DCLogic {
     return css;
   }
 
+  // Render a card to a canvas via SVG foreignObject + embedded fonts, then draw
+  // the logo on directly (nested foreignObject images don't reliably rasterize).
+  // targetW = output width in px. square = fill the Avery trim rectangle
+  // (no rounded corners / border) for print.
+  async rasterize(card, targetW, square) {
+    const css = await this.fontCss();
+    const rect = card.getBoundingClientRect();
+    const w = Math.round(targetW);
+    const h = Math.round(square ? targetW / (3.375 / 2.333) : targetW * (rect.height / rect.width));
+
+    const liveLogo = card.querySelector('.et-logo img');
+    let logoBox = null;
+    if (liveLogo && liveLogo.getAttribute('src')) {
+      const lr = liveLogo.getBoundingClientRect();
+      logoBox = {
+        src: liveLogo.getAttribute('src'),
+        x: (lr.left - rect.left) / rect.width * w,
+        y: (lr.top - rect.top) / rect.height * h,
+        w: lr.width / rect.width * w,
+        h: lr.height / rect.height * h,
+      };
+    }
+
+    const clone = card.cloneNode(true);
+    clone.querySelectorAll('input').forEach((n) => n.remove());
+    clone.querySelectorAll('.et-logo img').forEach((n) => n.remove());
+    clone.style.width = w + 'px';
+    clone.style.height = h + 'px';
+    clone.style.margin = '0';
+    if (square) { clone.style.borderRadius = '0'; clone.style.border = 'none'; }
+    // Resolve the design-system font variables inside the isolated SVG.
+    clone.style.setProperty('--font-sans', '"Inter", ui-sans-serif, system-ui, sans-serif');
+    clone.style.setProperty('--font-display', '"Goga", "Inter", ui-sans-serif, system-ui, sans-serif');
+
+    const xml = new XMLSerializer().serializeToString(clone);
+    const svg =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
+      '<defs><style>' + css + '</style></defs>' +
+      '<foreignObject x="0" y="0" width="' + w + '" height="' + h + '">' + xml + '</foreignObject>' +
+      '</svg>';
+
+    const img = new Image();
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    await img.decode();
+    // setTimeout (not requestAnimationFrame, which can stall when the tab isn't
+    // painting) so the render never hangs.
+    await new Promise((r) => setTimeout(r, 30));
+
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, w, h);
+    if (logoBox) {
+      try {
+        const limg = new Image();
+        limg.src = logoBox.src;
+        await limg.decode();
+        ctx.drawImage(limg, logoBox.x, logoBox.y, logoBox.w, logoBox.h);
+      } catch (e) { console.error('[export] logo composite failed', e); }
+    }
+    return canvas;
+  }
+
   async exportBadge(selector, filename) {
     const card = document.querySelector(selector);
     if (!card) return;
     try {
-      const css = await this.fontCss();
-      const rect = card.getBoundingClientRect();
-      const scale = 3840 / rect.width;                 // 3840px wide = 4K UHD (~1138 dpi across a 3.375in badge)
-      const w = Math.round(rect.width * scale);
-      const h = Math.round(rect.height * scale);
-
-      // Capture the logo and composite it onto the canvas afterward — images
-      // nested inside an SVG foreignObject can silently fail to rasterize, so we
-      // draw it directly instead of relying on the nested render.
-      const liveLogo = card.querySelector('.et-logo img');
-      let logoBox = null;
-      if (liveLogo && liveLogo.getAttribute('src')) {
-        const lr = liveLogo.getBoundingClientRect();
-        logoBox = {
-          src: liveLogo.getAttribute('src'),
-          x: (lr.left - rect.left) / rect.width * w,
-          y: (lr.top - rect.top) / rect.height * h,
-          w: lr.width / rect.width * w,
-          h: lr.height / rect.height * h,
-        };
-      }
-
-      const clone = card.cloneNode(true);
-      clone.querySelectorAll('input').forEach((n) => n.remove());
-      clone.querySelectorAll('.et-logo img').forEach((n) => n.remove());
-      clone.style.width = w + 'px';
-      clone.style.height = h + 'px';
-      clone.style.margin = '0';
-      // Resolve the design-system font variables inside the isolated SVG.
-      clone.style.setProperty('--font-sans', '"Inter", ui-sans-serif, system-ui, sans-serif');
-      clone.style.setProperty('--font-display', '"Goga", "Inter", ui-sans-serif, system-ui, sans-serif');
-
-      const xml = new XMLSerializer().serializeToString(clone);
-      const svg =
-        '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
-        '<defs><style>' + css + '</style></defs>' +
-        '<foreignObject x="0" y="0" width="' + w + '" height="' + h + '">' + xml + '</foreignObject>' +
-        '</svg>';
-
-      const img = new Image();
-      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-      await img.decode();
-      // settle a tick before painting; setTimeout (not requestAnimationFrame,
-      // which can stall when the tab isn't actively painting) so export never hangs.
-      await new Promise((r) => setTimeout(r, 30));
-
-      const canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, w, h);
-
-      if (logoBox) {
-        try {
-          const limg = new Image();
-          limg.src = logoBox.src;
-          await limg.decode();
-          ctx.drawImage(limg, logoBox.x, logoBox.y, logoBox.w, logoBox.h);
-        } catch (e) { console.error('[export] logo composite failed', e); }
-      }
-
+      const canvas = await this.rasterize(card, 3840, false); // 3840px wide = 4K UHD
       await new Promise((res) => canvas.toBlob((blob) => {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
@@ -193,19 +214,70 @@ class Component extends DCLogic {
     }
   }
 
+  loadJsPdf() {
+    if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve();
+    if (this._jspdf) return this._jspdf;
+    this._jspdf = new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      s.onload = () => res();
+      s.onerror = () => rej(new Error('Could not load the PDF library (offline?)'));
+      document.head.appendChild(s);
+    });
+    return this._jspdf;
+  }
+
+  // Lay the badge out 8-up on a US Letter sheet at Avery 5395 positions and save
+  // as PDF. Label 3.375x2.333in, 2 cols x 4 rows, symmetric 0.688/0.594in
+  // margins (pitch 3.749 x 2.493in). The image fills each die-cut cell.
+  async exportPdf(selector, filename) {
+    const card = document.querySelector(selector);
+    if (!card) return;
+    try {
+      await this.loadJsPdf();
+      const canvas = await this.rasterize(card, 1350, true); // ~400 dpi per 3.375in cell
+      const png = canvas.toDataURL('image/png');
+      const doc = new window.jspdf.jsPDF({ unit: 'in', format: 'letter', orientation: 'portrait' });
+      const LW = 3.375, LH = 2.333;
+      const cols = [0.688, 4.437];
+      const rows = [0.594, 3.087, 5.580, 8.073];
+      for (const y of rows) for (const x of cols) {
+        doc.addImage(png, 'PNG', x, y, LW, LH, 'badge', 'FAST');
+      }
+      doc.save(filename + '-avery5395.pdf');
+    } catch (e) {
+      console.error('[pdf] failed', e);
+      alert('PDF export failed: ' + (e && e.message ? e.message : e));
+    }
+  }
+
   renderVals() {
     return {
+      btnRow: { display: 'flex', gap: '8px' },
       exportBtn: {
+        flex: '1',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
         height: '34px', padding: '0 14px', borderRadius: '6px',
         fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
         cursor: 'pointer', color: 'rgb(127,238,100)',
         background: 'rgba(127,238,100,0.10)', border: '1px solid rgba(127,238,100,0.35)',
       },
+      pdfBtn: {
+        flex: '1',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+        height: '34px', padding: '0 14px', borderRadius: '6px',
+        fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
+        cursor: 'pointer', color: '#e8e8e8',
+        background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.16)',
+      },
       exportV1White: this.exportV1White,
       exportV1Dark: this.exportV1Dark,
       exportV2White: this.exportV2White,
       exportV2Dark: this.exportV2Dark,
+      pdfV1White: this.pdfV1White,
+      pdfV1Dark: this.pdfV1Dark,
+      pdfV2White: this.pdfV2White,
+      pdfV2Dark: this.pdfV2Dark,
     };
   }
 }
