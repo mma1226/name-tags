@@ -24,14 +24,22 @@
   </header>
 
   <section style="max-width:1080px; margin:48px auto 0; display:flex; flex-direction:column; gap:14px;">
-    <div style="display:flex; align-items:baseline; gap:12px;">
+    <div style="display:flex; align-items:center; flex-wrap:wrap; gap:12px;">
       <span style="font:500 13px/16px var(--font-sans); color:#e8e8e8;">Template — Name + company</span>
       <span style="font:400 13px/16px var(--font-sans); color:#747474;">editable · click to type, click the slot to upload a logo</span>
+      <div style="margin-left:auto; display:flex;">
+        <sc-if value="{{ brandShown }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ toggleWordmark }}" style="{{ markBtn }}" title="Hide the Modal wordmark on every badge, including exports"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 5.2A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a18.5 18.5 0 0 1-2.9 3.9"></path><path d="M6.6 6.6A18.4 18.4 0 0 0 2 12s3.6 7 10 7a10.3 10.3 0 0 0 4.2-.9"></path><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path><path d="m3 3 18 18"></path></svg>Hide wordmark</button>
+        </sc-if>
+        <sc-if value="{{ brandHidden }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ toggleWordmark }}" style="{{ markBtnActive }}" title="Show the Modal wordmark on every badge"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>Show wordmark</button>
+        </sc-if>
+      </div>
     </div>
     <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px;">
       <div data-tag="v1-white" style="display:flex; flex-direction:column; gap:10px;">
         <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">White</div>
-        <dc-import name="EventTag" theme="white" mode="filled" editable="true" slot-id="hero-white" glow="true" hint-size="100%,auto"></dc-import>
+        <dc-import name="EventTag" theme="white" mode="filled" editable="true" slot-id="hero-white" glow="true" wordmark="{{ wordmark }}" hint-size="100%,auto"></dc-import>
         <div style="{{ btnRow }}">
           <button type="button" onClick="{{ exportV1White }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
           <button type="button" onClick="{{ pdfV1White }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
@@ -39,7 +47,7 @@
       </div>
       <div data-tag="v1-dark" style="display:flex; flex-direction:column; gap:10px;">
         <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">Dark</div>
-        <dc-import name="EventTag" theme="dark" mode="filled" editable="true" slot-id="hero-dark" glow="true" hint-size="100%,auto"></dc-import>
+        <dc-import name="EventTag" theme="dark" mode="filled" editable="true" slot-id="hero-dark" glow="true" wordmark="{{ wordmark }}" hint-size="100%,auto"></dc-import>
         <div style="{{ btnRow }}">
           <button type="button" onClick="{{ exportV1Dark }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
           <button type="button" onClick="{{ pdfV1Dark }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
@@ -83,7 +91,7 @@
       <div data-roster style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin-top:4px;">
         <sc-for list="{{ attendees }}" as="a" hint-placeholder-count="4">
           <div data-roster-card style="display:flex; flex-direction:column; gap:6px;">
-            <dc-import name="EventTag" theme="{{ theme }}" mode="filled" glow="true" slot-id="{{ a.slotId }}" guest="{{ a.name }}" company="{{ a.company }}" company-logo="{{ a.logo }}" hint-size="100%,auto"></dc-import>
+            <dc-import name="EventTag" theme="{{ theme }}" mode="filled" glow="true" wordmark="{{ wordmark }}" slot-id="{{ a.slotId }}" guest="{{ a.name }}" company="{{ a.company }}" company-logo="{{ a.logo }}" hint-size="100%,auto"></dc-import>
           </div>
         </sc-for>
       </div>
@@ -106,7 +114,7 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { attendees: [], theme: 'white', busy: false, progress: '' };
+    this.state = { attendees: [], theme: 'white', busy: false, progress: '', wordmark: true };
   }
 
   // Company logos are loaded from assets/logos.js (window.MODAL_EVENT_LOGOS),
@@ -172,6 +180,7 @@ class Component extends DCLogic {
 
   setWhite = () => this.setState({ theme: 'white' });
   setDark = () => this.setState({ theme: 'dark' });
+  toggleWordmark = () => this.setState({ wordmark: !this.state.wordmark });
 
   // Lay every roster badge out 8-up across Avery 5395 sheets and save one PDF.
   exportRoster = async () => {
@@ -361,6 +370,7 @@ class Component extends DCLogic {
   renderVals() {
     const dark = this.state.theme === 'dark';
     const count = this.state.attendees.length;
+    const brandOn = this.state.wordmark;
 
     const seg = {
       display: 'inline-flex', gap: '2px', padding: '3px',
@@ -393,6 +403,20 @@ class Component extends DCLogic {
       },
       uploadBtn: Object.assign({}, greenBtn, { height: '36px', padding: '0 16px' }),
       rosterBtn: Object.assign({}, greenBtn, { height: '36px', padding: '0 16px' }),
+      markBtn: {
+        display: 'inline-flex', alignItems: 'center', gap: '8px',
+        height: '30px', padding: '0 12px', borderRadius: '6px',
+        fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
+        cursor: 'pointer', color: '#a3a3a3',
+        background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)',
+      },
+      markBtnActive: {
+        display: 'inline-flex', alignItems: 'center', gap: '8px',
+        height: '30px', padding: '0 12px', borderRadius: '6px',
+        fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
+        cursor: 'pointer', color: 'rgb(127,238,100)',
+        background: 'rgba(127,238,100,0.10)', border: '1px solid rgba(127,238,100,0.35)',
+      },
       segWrap: seg,
       segWhite: !dark ? segOn : segBase,
       segDark: dark ? segOn : segBase,
@@ -409,6 +433,10 @@ class Component extends DCLogic {
       attendees: this.state.attendees,
       hasAttendees: count > 0,
       noAttendees: count === 0,
+      toggleWordmark: this.toggleWordmark,
+      wordmark: brandOn,
+      brandShown: brandOn,
+      brandHidden: !brandOn,
       theme: this.state.theme,
       busy: this.state.busy,
       progress: this.state.progress,
