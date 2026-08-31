@@ -71,9 +71,16 @@
     </svg>
   </div>
   </sc-if>
+  <sc-if value="{{ showBrandText }}" hint-placeholder-val="{{ true }}">
+  <div style="{{ brandWrap }}">
+    <svg viewBox="117 0 136 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="{{ brandTextMark }}">
+      <path d="M146.602 6.42704H154.896V40.9875H148.676V16.3519L139.097 40.9875H133.469L123.892 16.3025V40.9875H117.67V6.42704H125.966L136.284 33.0871L146.605 6.42704H146.602ZM184.616 28.3953C184.616 30.9316 184.065 33.1934 182.962 35.1833C181.86 37.1757 180.312 38.7306 178.322 39.8504C176.33 40.9702 174.068 41.5288 171.532 41.5288C168.996 41.5288 166.645 40.9628 164.67 39.8257C162.695 38.691 161.147 37.1263 160.03 35.1364C158.91 33.1464 158.351 30.8969 158.351 28.3953C158.351 25.8937 158.91 23.6071 160.03 21.6321C161.15 19.657 162.705 18.1021 164.697 16.9675C166.687 15.8328 168.968 15.2643 171.534 15.2643C174.1 15.2643 176.374 15.8254 178.35 16.9428C180.325 18.065 181.862 19.6199 182.967 21.6098C184.07 23.5997 184.621 25.864 184.621 28.3978L184.616 28.3953ZM178.641 28.3953C178.641 26.8825 178.347 25.5254 177.754 24.324C177.161 23.1226 176.323 22.2006 175.237 21.5579C174.15 20.9177 172.916 20.5963 171.532 20.5963C170.148 20.5963 168.865 20.9177 167.782 21.5579C166.694 22.2006 165.846 23.1128 165.238 24.2968C164.63 25.4834 164.324 26.8479 164.324 28.3953C164.324 29.9428 164.63 31.3073 165.238 32.4938C165.846 33.6804 166.694 34.5925 167.782 35.2352C168.867 35.8755 170.118 36.1968 171.532 36.1968C172.946 36.1968 174.15 35.8755 175.237 35.2352C176.323 34.5925 177.163 33.6804 177.754 32.4938C178.347 31.3098 178.641 29.9428 178.641 28.3953ZM213.051 5.93265V40.9875H207.079V38.0755C206.29 39.131 205.249 39.969 203.969 40.592C202.686 41.2174 201.156 41.5288 199.376 41.5288C197.072 41.5288 195.03 40.9949 193.255 39.9245C191.478 38.8542 190.096 37.3315 189.107 35.3564C188.121 33.3813 187.627 31.0601 187.627 28.3953C187.627 25.7306 188.104 23.5083 189.058 21.5332C190.012 19.5581 191.352 18.0205 193.082 16.918C194.81 15.8155 196.842 15.2643 199.181 15.2643C200.99 15.2643 202.545 15.5585 203.845 16.1517C205.146 16.745 206.223 17.5508 207.079 18.5693V5.93018H213.051V5.93265ZM207.276 28.3953C207.276 26.8825 206.997 25.5254 206.436 24.324C205.877 23.1226 205.086 22.2006 204.068 21.5579C203.047 20.9177 201.845 20.5963 200.464 20.5963C199.013 20.5963 197.772 20.9177 196.736 21.5579C195.7 22.2006 194.909 23.1226 194.365 24.324C193.824 25.5254 193.552 26.8825 193.552 28.3953C193.552 29.9082 193.824 31.2677 194.365 32.4691C194.909 33.6705 195.708 34.5901 196.761 35.2328C197.816 35.873 199.05 36.1944 200.466 36.1944C201.883 36.1944 203.007 35.873 204.043 35.2328C205.079 34.5901 205.88 33.6705 206.438 32.4691C206.999 31.2677 207.279 29.9106 207.279 28.3953H207.276ZM241.933 15.8056V40.985H235.961V38.1225C235.138 39.1755 234.085 40.0061 232.802 40.6167C231.519 41.2248 229.986 41.5288 228.209 41.5288C225.905 41.5288 223.866 40.9949 222.088 39.9245C220.311 38.8542 218.937 37.3315 217.965 35.3564C216.994 33.3813 216.509 31.0601 216.509 28.3953C216.509 25.7306 216.986 23.5083 217.94 21.5332C218.895 19.5581 220.234 18.0205 221.965 16.918C223.693 15.8155 225.725 15.2643 228.063 15.2643C229.905 15.2643 231.502 15.5856 232.851 16.2259C234.198 16.8686 235.237 17.6992 235.961 18.7176V15.8056H241.933ZM236.156 28.3953C236.156 26.8825 235.877 25.5254 235.316 24.324C234.757 23.1226 233.966 22.2006 232.948 21.5579C231.927 20.9177 230.725 20.5963 229.344 20.5963C227.893 20.5963 226.652 20.9177 225.616 21.5579C224.58 22.2006 223.789 23.1226 223.245 24.324C222.704 25.5254 222.432 26.8825 222.432 28.3953C222.432 29.9082 222.704 31.2677 223.245 32.4691C223.789 33.6705 224.588 34.5901 225.641 35.2328C226.696 35.873 227.93 36.1944 229.346 36.1944C230.762 36.1944 231.887 35.873 232.923 35.2328C233.959 34.5901 234.76 33.6705 235.318 32.4691C235.879 31.2677 236.159 29.9106 236.159 28.3953H236.156ZM246.944 5.93265V40.9875H252.919V5.93265H246.944Z"></path>
+    </svg>
+  </div>
+  </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;wordmark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;guest&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;company&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;companyLogo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;wordmark&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;logo&quot;,&quot;text&quot;,&quot;off&quot;],&quot;default&quot;:&quot;logo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;guest&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;company&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;companyLogo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   state = { logo: null };
 
@@ -222,7 +229,9 @@ class Component extends DCLogic {
     const dark = theme === 'dark';
     const editable = this.props.editable === true || this.props.editable === 'true';
     const glowOn = this.props.glow !== false && this.props.glow !== 'false';
-    const brandOn = this.props.wordmark !== false && this.props.wordmark !== 'false';
+    const wm = this.props.wordmark;
+    const brandMode = (wm === false || wm === 'false' || wm === 'off') ? 'off'
+                    : (wm === 'text') ? 'text' : 'logo';
 
     const ink     = dark ? '#f2f2f2' : '#181818';
     const nameColor = dark ? '#E8FFD5' : ink;   // name text tint on the dark card
@@ -256,7 +265,8 @@ class Component extends DCLogic {
       isFilled: mode === 'filled',
       isBlank:  mode === 'blank',
       isGlow:   glowOn,
-      showBrand: brandOn,
+      showBrand:     brandMode === 'logo',
+      showBrandText: brandMode === 'text',
       editable: editable,
       readOnly: !editable,
       hasLogo:  hasLogo,
@@ -305,6 +315,7 @@ class Component extends DCLogic {
         display: 'flex', justifyContent: 'flex-end', color: nameColor,
       },
       brandMark: { width: '30cqw', height: 'auto', display: 'block' },
+      brandTextMark: { width: '16.1cqw', height: 'auto', display: 'block' },
     };
   }
 }

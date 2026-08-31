@@ -27,13 +27,13 @@
     <div style="display:flex; align-items:center; flex-wrap:wrap; gap:12px;">
       <span style="font:500 13px/16px var(--font-sans); color:#e8e8e8;">Template — Name + company</span>
       <span style="font:400 13px/16px var(--font-sans); color:#747474;">editable · click to type, click the slot to upload a logo</span>
-      <div style="margin-left:auto; display:flex;">
-        <sc-if value="{{ brandShown }}" hint-placeholder-val="{{ true }}">
-          <button type="button" onClick="{{ toggleWordmark }}" style="{{ markBtn }}" title="Hide the Modal wordmark on every badge, including exports"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 5.2A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a18.5 18.5 0 0 1-2.9 3.9"></path><path d="M6.6 6.6A18.4 18.4 0 0 0 2 12s3.6 7 10 7a10.3 10.3 0 0 0 4.2-.9"></path><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path><path d="m3 3 18 18"></path></svg>Hide wordmark</button>
-        </sc-if>
-        <sc-if value="{{ brandHidden }}" hint-placeholder-val="{{ true }}">
-          <button type="button" onClick="{{ toggleWordmark }}" style="{{ markBtnActive }}" title="Show the Modal wordmark on every badge"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>Show wordmark</button>
-        </sc-if>
+      <div style="margin-left:auto; display:flex; align-items:center; gap:8px;">
+        <span style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.12em; color:#747474;">Wordmark</span>
+        <div style="{{ segWrap }}">
+          <button type="button" onClick="{{ setMarkLogo }}" style="{{ segMarkLogo }}" title="Show the Modal lockup">Logo</button>
+          <button type="button" onClick="{{ setMarkText }}" style="{{ segMarkText }}" title="Set the Modal mark as plain text, like a company without a baked-in logo">Text</button>
+          <button type="button" onClick="{{ setMarkOff }}" style="{{ segMarkOff }}" title="Leave the Modal mark off the badge">Off</button>
+        </div>
       </div>
     </div>
     <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px;">
@@ -44,6 +44,7 @@
           <button type="button" onClick="{{ exportV1White }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
           <button type="button" onClick="{{ pdfV1White }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
         </div>
+        <button type="button" onClick="{{ blankV1White }}" style="{{ blankBtn }}" title="Eight empty badges on one Avery 5395 sheet, to write on by hand"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 16.5 16 8.5"></path></svg>PDF · blank write-in sheet</button>
       </div>
       <div data-tag="v1-dark" style="display:flex; flex-direction:column; gap:10px;">
         <div style="font:600 11px/15px var(--font-sans); text-transform:uppercase; letter-spacing:0.13em; color:#747474;">Dark</div>
@@ -52,6 +53,7 @@
           <button type="button" onClick="{{ exportV1Dark }}" style="{{ exportBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 12 5 5 5-5"></path><path d="M5 21h14"></path></svg>PNG</button>
           <button type="button" onClick="{{ pdfV1Dark }}" style="{{ pdfBtn }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h6M8 12h8M8 16h5"></path></svg>PDF · sheet of 8</button>
         </div>
+        <button type="button" onClick="{{ blankV1Dark }}" style="{{ blankBtn }}" title="Eight empty badges on one Avery 5395 sheet, to write on by hand"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 16.5 16 8.5"></path></svg>PDF · blank write-in sheet</button>
       </div>
     </div>
   </section>
@@ -91,7 +93,7 @@
       <div data-roster style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin-top:4px;">
         <sc-for list="{{ attendees }}" as="a" hint-placeholder-count="4">
           <div data-roster-card style="display:flex; flex-direction:column; gap:6px;">
-            <dc-import name="EventTag" theme="{{ theme }}" mode="filled" glow="true" wordmark="{{ wordmark }}" slot-id="{{ a.slotId }}" guest="{{ a.name }}" company="{{ a.company }}" company-logo="{{ a.logo }}" hint-size="100%,auto"></dc-import>
+            <dc-import name="EventTag" theme="{{ theme }}" mode="filled" glow="true" slot-id="{{ a.slotId }}" guest="{{ a.name }}" company="{{ a.company }}" company-logo="{{ a.logo }}" wordmark="{{ a.wordmark }}" hint-size="100%,auto"></dc-import>
           </div>
         </sc-for>
       </div>
@@ -114,12 +116,15 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { attendees: [], theme: 'white', busy: false, progress: '', wordmark: true };
+    this.state = { attendees: [], theme: 'white', busy: false, progress: '', wordmark: 'logo' };
   }
 
   // Company logos are loaded from assets/logos.js (window.MODAL_EVENT_LOGOS),
   // keyed by lowercased company name. Recolored per theme at render. Companies
   // absent from the map fall back to showing the company name as a wordmark.
+  // Only Modal's own people carry the Modal mark on their badge.
+  isModal(company) { return /^modal$/i.test((company || '').trim()); }
+
   companyLogo(company) {
     const map = (typeof window !== 'undefined' && window.MODAL_EVENT_LOGOS) || {};
     const key = (company || '').toLowerCase().trim();
@@ -180,7 +185,9 @@ class Component extends DCLogic {
 
   setWhite = () => this.setState({ theme: 'white' });
   setDark = () => this.setState({ theme: 'dark' });
-  toggleWordmark = () => this.setState({ wordmark: !this.state.wordmark });
+  setMarkLogo = () => this.setState({ wordmark: 'logo' });
+  setMarkText = () => this.setState({ wordmark: 'text' });
+  setMarkOff  = () => this.setState({ wordmark: 'off' });
 
   // Lay every roster badge out 8-up across Avery 5395 sheets and save one PDF.
   exportRoster = async () => {
@@ -192,9 +199,7 @@ class Component extends DCLogic {
       await this.loadJsPdf();
       await this.fontCss();
       const doc = new window.jspdf.jsPDF({ unit: 'in', format: 'letter', orientation: 'portrait' });
-      const LW = 3.375, LH = 2.333;
-      const cols = [0.688, 4.437];
-      const rows = [0.594, 3.087, 5.580, 8.073];
+      const { LH, cols, rows } = this.sheet();
       for (let i = 0; i < cards.length; i++) {
         const pos = i % 8;
         if (i > 0 && pos === 0) doc.addPage();
@@ -202,7 +207,8 @@ class Component extends DCLogic {
         const canvas = await this.rasterize(cards[i], 1100, true);
         // JPEG: the print cells are opaque rectangles, so no alpha is needed —
         // keeps a 24-badge sheet to a few MB instead of >100MB of raw PNG.
-        doc.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', cols[pos % 2], rows[Math.floor(pos / 2)], LW, LH);
+        const col = cols[pos % 2];
+        doc.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', col.x, rows[Math.floor(pos / 2)], col.w, LH);
       }
       doc.save('name-tags-avery5395.pdf');
     } catch (e) {
@@ -216,6 +222,8 @@ class Component extends DCLogic {
   exportV1White = () => this.exportBadge('[data-tag="v1-white"] .et-card', 'name-tag-v1-white');
   exportV1Dark  = () => this.exportBadge('[data-tag="v1-dark"] .et-card',  'name-tag-v1-dark');
   pdfV1White = () => this.exportPdf('[data-tag="v1-white"] .et-card', 'name-tags-v1-white');
+  blankV1White = () => this.exportPdf('[data-tag="v1-white"] .et-card', 'name-tags-blank-white', true);
+  blankV1Dark  = () => this.exportPdf('[data-tag="v1-dark"] .et-card', 'name-tags-blank-dark', true);
   pdfV1Dark  = () => this.exportPdf('[data-tag="v1-dark"] .et-card',  'name-tags-v1-dark');
 
   // Build a <style> string with the brand fonts inlined as data URLs so the
@@ -257,15 +265,16 @@ class Component extends DCLogic {
   // Render a card to a canvas via SVG foreignObject + embedded fonts, then draw
   // the logo on directly (nested foreignObject images don't reliably rasterize).
   // targetW = output width in px. square = fill the Avery trim rectangle.
-  async rasterize(card, targetW, square) {
+  async rasterize(card, targetW, square, blank) {
     const css = await this.fontCss();
     const rect = card.getBoundingClientRect();
     const w = Math.round(targetW);
-    const h = Math.round(square ? targetW / (3.375 / 2.333) : targetW * (rect.height / rect.width));
+    const sheet = this.sheet();
+    const h = Math.round(square ? targetW / (sheet.LW / sheet.LH) : targetW * (rect.height / rect.width));
 
     const liveLogo = card.querySelector('img');
     let logoBox = null;
-    if (liveLogo && liveLogo.getAttribute('src')) {
+    if (!blank && liveLogo && liveLogo.getAttribute('src')) {
       const lr = liveLogo.getBoundingClientRect();
       logoBox = {
         src: liveLogo.getAttribute('src'),
@@ -278,6 +287,7 @@ class Component extends DCLogic {
 
     const clone = card.cloneNode(true);
     clone.querySelectorAll('input').forEach((n) => n.remove());
+    if (blank) clone.querySelectorAll('.et-name').forEach((n) => { n.textContent = ''; });
     clone.querySelectorAll('img').forEach((n) => n.remove());
     clone.style.width = w + 'px';
     clone.style.height = h + 'px';
@@ -332,6 +342,32 @@ class Component extends DCLogic {
     }
   }
 
+  // Avery 5395 sheet geometry, in inches. Artwork is grown by `bleed` on every
+  // side and its origin shifted back by the same amount, so each badge stays
+  // centred on its die cut and a slight misregistration leaves no white edge.
+  // `offsetY` nudges every badge down the page to correct printer registration
+  // that lands the artwork high and clips the bottom of each label. Raise it if
+  // the bottom is still trimmed; lower it if the top starts to go.
+  avery = {
+    w: 3.375, h: 2.333, cols: [0.688, 4.437], rows: [0.594, 3.087, 5.580, 8.073],
+    bleed: 0.025, offsetY: 0.0625, leftExtend: 0.025,
+  };
+
+  // Each column is placed as its own box so the outer edge of the left column can
+  // run further out than the shared bleed, where the print lands short of the die
+  // cut. Extending leftward keeps the inner edge — and the gutter — where it is.
+  sheet() {
+    const a = this.avery, b = a.bleed;
+    const LW = a.w + 2 * b;
+    return {
+      LW, LH: a.h + 2 * b,
+      rows: a.rows.map((y) => y - b + a.offsetY),
+      cols: a.cols.map((x, i) => (i === 0
+        ? { x: x - b - a.leftExtend, w: LW + a.leftExtend }
+        : { x: x - b, w: LW })),
+    };
+  }
+
   loadJsPdf() {
     if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve();
     if (this._jspdf) return this._jspdf;
@@ -345,20 +381,19 @@ class Component extends DCLogic {
     return this._jspdf;
   }
 
-  // Single design, 8-up on one Avery 5395 sheet.
-  async exportPdf(selector, filename) {
+  // Single design, 8-up on one Avery 5395 sheet. `blank` drops the name and
+  // logo, leaving a badge to be written on by hand at the door.
+  async exportPdf(selector, filename, blank) {
     const card = document.querySelector(selector);
     if (!card) return;
     try {
       await this.loadJsPdf();
-      const canvas = await this.rasterize(card, 1350, true);
+      const canvas = await this.rasterize(card, 1350, true, blank);
       const png = canvas.toDataURL('image/png');
       const doc = new window.jspdf.jsPDF({ unit: 'in', format: 'letter', orientation: 'portrait' });
-      const LW = 3.375, LH = 2.333;
-      const cols = [0.688, 4.437];
-      const rows = [0.594, 3.087, 5.580, 8.073];
-      for (const y of rows) for (const x of cols) {
-        doc.addImage(png, 'PNG', x, y, LW, LH, 'badge', 'FAST');
+      const { LH, cols, rows } = this.sheet();
+      for (const y of rows) for (const c of cols) {
+        doc.addImage(png, 'PNG', c.x, y, c.w, LH, 'badge', 'FAST');
       }
       doc.save(filename + '-avery5395.pdf');
     } catch (e) {
@@ -370,7 +405,7 @@ class Component extends DCLogic {
   renderVals() {
     const dark = this.state.theme === 'dark';
     const count = this.state.attendees.length;
-    const brandOn = this.state.wordmark;
+    const mark = this.state.wordmark;
 
     const seg = {
       display: 'inline-flex', gap: '2px', padding: '3px',
@@ -401,42 +436,40 @@ class Component extends DCLogic {
         cursor: 'pointer', color: '#e8e8e8',
         background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.16)',
       },
-      uploadBtn: Object.assign({}, greenBtn, { height: '36px', padding: '0 16px' }),
-      rosterBtn: Object.assign({}, greenBtn, { height: '36px', padding: '0 16px' }),
-      markBtn: {
-        display: 'inline-flex', alignItems: 'center', gap: '8px',
-        height: '30px', padding: '0 12px', borderRadius: '6px',
+      blankBtn: {
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+        width: '100%', height: '32px', padding: '0 14px', borderRadius: '6px',
         fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
         cursor: 'pointer', color: '#a3a3a3',
-        background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)',
+        background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)',
       },
-      markBtnActive: {
-        display: 'inline-flex', alignItems: 'center', gap: '8px',
-        height: '30px', padding: '0 12px', borderRadius: '6px',
-        fontSize: '13px', fontWeight: 500, fontFamily: 'var(--font-sans)',
-        cursor: 'pointer', color: 'rgb(127,238,100)',
-        background: 'rgba(127,238,100,0.10)', border: '1px solid rgba(127,238,100,0.35)',
-      },
+      uploadBtn: Object.assign({}, greenBtn, { height: '36px', padding: '0 16px' }),
+      rosterBtn: Object.assign({}, greenBtn, { height: '36px', padding: '0 16px' }),
       segWrap: seg,
       segWhite: !dark ? segOn : segBase,
       segDark: dark ? segOn : segBase,
+      segMarkLogo: mark === 'logo' ? segOn : segBase,
+      segMarkText: mark === 'text' ? segOn : segBase,
+      segMarkOff:  mark === 'off'  ? segOn : segBase,
 
       exportV1White: this.exportV1White,
       exportV1Dark: this.exportV1Dark,
       pdfV1White: this.pdfV1White,
+      blankV1White: this.blankV1White,
+      blankV1Dark: this.blankV1Dark,
       pdfV1Dark: this.pdfV1Dark,
 
       onCsv: this.onCsv,
       setWhite: this.setWhite,
       setDark: this.setDark,
       exportRoster: this.exportRoster,
-      attendees: this.state.attendees,
+      attendees: this.state.attendees.map((a) => Object.assign({}, a, { wordmark: this.isModal(a.company) ? mark : 'off' })),
       hasAttendees: count > 0,
       noAttendees: count === 0,
-      toggleWordmark: this.toggleWordmark,
-      wordmark: brandOn,
-      brandShown: brandOn,
-      brandHidden: !brandOn,
+      setMarkLogo: this.setMarkLogo,
+      setMarkText: this.setMarkText,
+      setMarkOff: this.setMarkOff,
+      wordmark: mark,
       theme: this.state.theme,
       busy: this.state.busy,
       progress: this.state.progress,
