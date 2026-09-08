@@ -251,6 +251,10 @@ class Component extends DCLogic {
     // Read-only badges (CSV roster) can carry a guest name and a company name.
     const guest = (this.props.guest || '').trim();
     const company = (this.props.company || '').trim();
+    // Modal's own lockup is a wide wordmark+icon lockup, not a peer logo — render it
+    // at the same visual size as another attendee's plain-text company name instead
+    // of the full logo scale, so a Modal employee's badge doesn't outsize everyone else's.
+    const isModalCompanyLogo = hasLogo && /^modal$/i.test(company);
 
     const glowBg = dark
       ? 'radial-gradient(92% 130% at -10% 60%, rgba(127,238,100,0.32), rgba(127,238,100,0) 56%)'
@@ -308,7 +312,10 @@ class Component extends DCLogic {
 
       logoSlot: { position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-start', cursor: 'pointer', maxWidth: '100%', minWidth: '0', minHeight: '0', boxSizing: 'border-box' },
       fileOverlay: { position: 'absolute', inset: 0, width: '100%', height: '100%', margin: 0, padding: 0, border: 'none', opacity: 0, cursor: 'pointer' },
-      logoImg: { maxHeight: '14cqw', maxWidth: '58cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
+      logoImg: {
+        maxHeight: isModalCompanyLogo ? '6cqw' : '14cqw',
+        maxWidth: '58cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block',
+      },
 
       brandWrap: {
         position: 'absolute', right: '7cqw', bottom: '7cqw',
