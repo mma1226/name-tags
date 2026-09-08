@@ -93,7 +93,7 @@
       <div data-roster style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin-top:4px;">
         <sc-for list="{{ attendees }}" as="a" hint-placeholder-count="4">
           <div data-roster-card style="display:flex; flex-direction:column; gap:6px;">
-            <dc-import name="EventTag" theme="{{ theme }}" mode="filled" glow="true" slot-id="{{ a.slotId }}" guest="{{ a.name }}" company="{{ a.company }}" company-logo="{{ a.logo }}" wordmark="{{ a.wordmark }}" hint-size="100%,auto"></dc-import>
+            <dc-import name="EventTag" theme="{{ theme }}" mode="filled" glow="true" slot-id="{{ a.slotId }}" first="{{ a.first }}" last="{{ a.last }}" company="{{ a.company }}" company-logo="{{ a.logo }}" wordmark="{{ a.wordmark }}" hint-size="100%,auto"></dc-import>
           </div>
         </sc-for>
       </div>
@@ -163,6 +163,8 @@ class Component extends DCLogic {
       if (!first && !last) continue;
       out.push({
         name: (first + ' ' + last).trim(),
+        first: first,
+        last: last,
         company: company,
         logo: this.companyLogo(company),
         slotId: 'roster-' + i,
