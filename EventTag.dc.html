@@ -35,7 +35,12 @@
     </sc-if>
     <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ true }}">
       <sc-if value="{{ hasGuest }}" hint-placeholder-val="{{ true }}">
-        <div style="{{ nameStyle }}">{{ guest }}</div>
+        <div style="{{ nameStyle }}">
+          <div>{{ first }}</div>
+          <sc-if value="{{ hasLast }}" hint-placeholder-val="{{ true }}">
+            <div>{{ last }}</div>
+          </sc-if>
+        </div>
       </sc-if>
       <sc-if value="{{ noGuest }}" hint-placeholder-val="{{ true }}">
         <div class="et-name" data-ph="Name" style="{{ nameStyle }}"></div>
@@ -80,7 +85,7 @@
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;wordmark&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;logo&quot;,&quot;text&quot;,&quot;off&quot;],&quot;default&quot;:&quot;logo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;guest&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;company&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;companyLogo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:329},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;white&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;white&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filled&quot;,&quot;blank&quot;],&quot;default&quot;:&quot;filled&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;wordmark&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;logo&quot;,&quot;text&quot;,&quot;off&quot;],&quot;default&quot;:&quot;logo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;editable&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;slotId&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tag&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;guest&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;first&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;last&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;company&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;companyLogo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   state = { logo: null };
 
@@ -249,8 +254,23 @@ class Component extends DCLogic {
     const displayLogo = isSvgLogo ? this.recolorSvg(rawLogo, dark ? '#E8FFD5' : '#000000') : rawLogo;
 
     // Read-only badges (CSV roster) can carry a guest name and a company name.
-    const guest = (this.props.guest || '').trim();
+    // First/last always render as two stacked lines (never wrapped-if-it-fits),
+    // so every roster badge reads consistently regardless of name length.
+    let first = (this.props.first || '').trim();
+    let last = (this.props.last || '').trim();
+    const guest = (first + ' ' + last).trim() || (this.props.guest || '').trim();
+    // Legacy callers may still pass a single combined `guest` string — split it
+    // on the first space so it still lands on two lines like everyone else.
+    if (!first && !last && guest) {
+      const parts = guest.split(/\s+/);
+      first = parts.shift() || '';
+      last = parts.join(' ');
+    }
     const company = (this.props.company || '').trim();
+    // Modal's own lockup is a wide wordmark+icon lockup, not a peer logo — render it
+    // at the same visual size as another attendee's plain-text company name instead
+    // of the full logo scale, so a Modal employee's badge doesn't outsize everyone else's.
+    const isModalCompanyLogo = hasLogo && /^modal$/i.test(company);
 
     const glowBg = dark
       ? 'radial-gradient(92% 130% at -10% 60%, rgba(127,238,100,0.32), rgba(127,238,100,0) 56%)'
@@ -277,6 +297,9 @@ class Component extends DCLogic {
       guest:    guest,
       hasGuest: !!guest,
       noGuest:  !guest,
+      first:    first,
+      last:     last,
+      hasLast:  !!last,
       company:  company,
       companyText:    !hasLogo && !!company,   // show the company name as text
       noCompanyMark:  !hasLogo && !company,    // show the dashed placeholder
@@ -308,7 +331,10 @@ class Component extends DCLogic {
 
       logoSlot: { position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-start', cursor: 'pointer', maxWidth: '100%', minWidth: '0', minHeight: '0', boxSizing: 'border-box' },
       fileOverlay: { position: 'absolute', inset: 0, width: '100%', height: '100%', margin: 0, padding: 0, border: 'none', opacity: 0, cursor: 'pointer' },
-      logoImg: { maxHeight: '14cqw', maxWidth: '58cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' },
+      logoImg: {
+        maxHeight: isModalCompanyLogo ? '6cqw' : '14cqw',
+        maxWidth: '58cqw', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block',
+      },
 
       brandWrap: {
         position: 'absolute', right: '7cqw', bottom: '7cqw',
